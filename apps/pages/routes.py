@@ -17,7 +17,6 @@ from jinja2 import TemplateNotFound
 # Public pages that do not require authentication
 PUBLIC_PAGES = [
     'landing', 'landing.html',
-    'homenagem', 'homenagem.html',
     'pedido', 'pedido.html',
     'blog', 'blog.html',
     'loja', 'loja.html',
@@ -65,7 +64,8 @@ DEFAULT_LINKS = [
     ('Instagram', '@karinemascena', 'https://www.instagram.com/karinemascena/', 'ri-instagram-line', '#e1306c'),
     ('LinkedIn', 'Karine Mascena', 'https://www.linkedin.com/in/karinemascena/', 'ri-linkedin-fill', '#0077b5'),
     ('WhatsApp', '(81) 9 8447-2771', 'https://wa.me/5581984472771', 'ri-whatsapp-line', '#25d366'),
-    ('Perfil Profissional', 'Áreas de Atuação & Advocacy', '/', 'ri-global-line', '#4A2338'),
+    ('Área Restrita (Login)', 'Acesso restrito a clientes e parceiros', '/auth-signin', 'ri-user-lock-line', '#4A2338'),
+    ('Perfil Profissional', 'Áreas de Atuação & Advocacy', '/', 'ri-global-line', '#C5A059'),
 ]
 
 PERMISSION_MODULES = [
@@ -297,11 +297,6 @@ def home():
     return render_template('pages/landing.html', segment='landing', carousel_images=active_carousel_images(),
                            landing_plans=active_plans())
 
-
-@blueprint.route('/homenagem')
-def homenagem():
-    """Render the tribute page for Byll di Olinda (1990-2019)."""
-    return render_template('pages/homenagem.html', segment='homenagem')
 
 
 ORDER_STEPS = ['Orçamento', 'Sinal', 'Pedido', 'Preparo', 'Pagamento', 'Envio']

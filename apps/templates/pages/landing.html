@@ -133,12 +133,18 @@
                 <li class="nav-item"><a class="nav-link active text-primary" href="#inicio">Início</a></li>
                 <li class="nav-item"><a class="nav-link text-dark hover-primary" href="#sobre">Perfil & Atuação</a></li>
                 <li class="nav-item"><a class="nav-link text-dark hover-primary" href="#atuacao">Áreas de Atuação</a></li>
-                <li class="nav-item"><a class="nav-link text-dark hover-primary" href="#terceirosetor">Terceiro Setor & Reforma Tributária</a></li>
+                <li class="nav-item"><a class="nav-link text-dark hover-primary" href="#terceirosetor">Terceiro Setor</a></li>
+                <li class="nav-item"><a class="nav-link text-dark hover-primary" href="#processos"><i class="ri-folder-shared-line me-1 text-warning"></i>Processos</a></li>
                 <li class="nav-item"><a class="nav-link text-dark hover-primary" href="/blog"><i class="ri-article-line me-1 text-primary"></i>Artigos</a></li>
                 <li class="nav-item"><a class="nav-link text-dark hover-primary" href="/links"><i class="ri-links-line me-1 text-warning"></i>Links</a></li>
             </ul>
 
             <div class="d-flex align-items-center gap-2">
+                <!-- Login / Área Restrita -->
+                <a href="/auth-signin" class="btn rounded-pill px-3 py-1.5 text-white fw-bold shadow-sm d-inline-flex align-items-center gap-1.5 me-1" style="background-color: #4A2338;" title="Acesso à Área Restrita / Sistema Interno">
+                    <i class="ri-user-lock-line fs-16 text-warning"></i> <span>Área Restrita (Login)</span>
+                </a>
+
                 <!-- Redes Sociais -->
                 <a href="https://www.linkedin.com/in/karinemascena/" target="_blank" rel="noopener noreferrer" class="btn btn-outline-secondary btn-sm rounded-circle p-0 d-inline-flex align-items-center justify-content-center" style="width:36px;height:36px" title="LinkedIn">
                     <i class="ri-linkedin-fill fs-18" style="color:#0077b5"></i>
@@ -196,9 +202,12 @@
                 <h1 class="display-4 fw-bold text-white mb-2" style="font-family: serif; letter-spacing: -0.01em; text-shadow: 0 4px 16px rgba(0,0,0,0.8);">
                     Karine Mascena
                 </h1>
-                <p class="fs-18 text-warning fw-semibold mb-4" style="text-shadow: 0 2px 10px rgba(0,0,0,0.8);">
-                    Soluções Estratégicas no Terceiro Setor · Impactos da Reforma Tributária · Prevenção e Resolução de Conflitos
-                </p>
+                
+                <div class="fs-18 text-warning fw-semibold mb-4 d-grid gap-1" style="text-shadow: 0 2px 10px rgba(0,0,0,0.8);">
+                    <div>Soluções Estratégicas no Terceiro Setor</div>
+                    <div>Impactos da Reforma Tributária</div>
+                    <div>Prevenção e Resolução de Conflitos</div>
+                </div>
 
                 <div class="d-flex flex-wrap align-items-center gap-3">
                     <a href="https://wa.me/5581984472771?text=Ol%C3%A1%20Dra.%20Karine,%20gostaria%20de%20falar%20sobre%20uma%20consulta." target="_blank" rel="noopener noreferrer" class="btn btn-gold rounded-pill px-4 py-2.5 shadow-lg d-inline-flex align-items-center gap-2">
@@ -356,6 +365,57 @@
                 </div>
                 <div class="col-lg-6 text-center">
                     <img src="{{ config.ASSETS_ROOT }}/images/karine_kom1.jpg" alt="Karine Mascena" class="w-100 h-100 object-fit-cover" style="max-height: 460px;">
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- SEÇÃO: GESTÃO DE PROCESSOS & DEMANDAS -->
+<section id="processos" class="py-5 bg-white border-top border-light-subtle">
+    <div class="container py-lg-4">
+        <div class="text-center max-w-700 mx-auto mb-5">
+            <span class="badge px-3 py-2 rounded-pill fw-bold text-uppercase mb-2" style="background:#fbf5e8; color: var(--km-gold)">Transparência & Gestão</span>
+            <h2 class="display-6 fw-bold text-dark" style="font-family: serif;">Gestão de Processos & Acompanhamento de Demandas</h2>
+            <p class="text-secondary fs-16">Acompanhamento contínuo de casos judiciais, pareceres técnicos e demandas administrativas com comunicação clara e linguagem acessível.</p>
+        </div>
+
+        <div class="row g-4 mb-5">
+            <div class="col-md-4">
+                <div class="card h-100 border-0 shadow-sm rounded-4 p-4 bg-light border-start border-4 border-primary">
+                    <div class="feature-card-icon mb-3"><i class="ri-search-eye-line text-primary"></i></div>
+                    <h5 class="fw-bold text-dark mb-2">Análise de Viabilidade & Riscos</h5>
+                    <p class="text-secondary fs-14 mb-0">Estudo prévio rigoroso de cada caso, mapeando probabilidades, precedentes jurídicos e estratégias preventivas antes de qualquer medida.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100 border-0 shadow-sm rounded-4 p-4 bg-light border-start border-4 border-warning">
+                    <div class="feature-card-icon mb-3"><i class="ri-file-text-line text-warning"></i></div>
+                    <h5 class="fw-bold text-dark mb-2">Relatórios em Linguagem Acessível</h5>
+                    <p class="text-secondary fs-14 mb-0">Produção de relatórios técnicos e atualizações periódicas traduzidas de forma clara para que diretores e gestores tomem decisões seguras.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100 border-0 shadow-sm rounded-4 p-4 bg-light border-start border-4 border-success">
+                    <div class="feature-card-icon mb-3"><i class="ri-government-line text-success"></i></div>
+                    <h5 class="fw-bold text-dark mb-2">Articulação Interinstitucional</h5>
+                    <p class="text-secondary fs-14 mb-0">Atuação ética e direta junto aos diferentes atores, varas especializadas, tribunais e órgãos do sistema de justiça.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Banner Área Restrita para Clientes / OSCs -->
+        <div class="card border-0 shadow-sm rounded-4 p-4 p-md-5 text-white" style="background: linear-gradient(135deg, #1e1018 0%, #4A2338 100%);">
+            <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-4">
+                <div>
+                    <span class="badge bg-warning text-dark px-3 py-1 rounded-pill fw-bold text-uppercase fs-11 mb-2">Área do Cliente & Parceiros</span>
+                    <h4 class="fw-bold text-white mb-1" style="font-family: serif;">Acompanhe seus processos e pareceres no sistema</h4>
+                    <p class="text-white-50 mb-0 fs-15">Acesse o portal restrito para visualizar andamentos, documentos e relatórios técnicos do seu caso.</p>
+                </div>
+                <div>
+                    <a href="/auth-signin" class="btn btn-gold rounded-pill px-4 py-2.5 shadow-sm d-inline-flex align-items-center gap-2">
+                        <i class="ri-lock-line fs-18"></i> <span>Acessar Área Restrita (Login)</span>
+                    </a>
                 </div>
             </div>
         </div>
