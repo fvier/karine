@@ -1,30 +1,31 @@
 {% extends "layouts/base.html" %}
 
-{% block title %}Gestão do Blog | Olinda Aguiar ERP{% endblock title %}
+{% block title %}Gestão de Artigos | Karine Mascena{% endblock title %}
 
 {% block content %}
-<div class="container-fluid py-4">
+<div class="container-fluid py-4" style="max-width: 1200px;">
 
     <!-- Cabeçalho Principal -->
-    <div class="d-flex flex-wrap align-items-center justify-content-between gap-3 mb-4">
-        <div>
-            <span class="badge bg-warning text-dark px-3 py-1 rounded-pill fw-bold text-uppercase fs-11 mb-1">Painel Administrativo</span>
-            <h2 class="fw-bold text-dark mb-0"><i class="ri-article-line text-warning me-2"></i>Gestão de Artigos do Blog</h2>
-            <small class="text-muted">Gerencie, edite ou crie novos artigos em uma página de edição dedicada em tela cheia.</small>
-        </div>
-        <div class="d-flex gap-2">
-            <a href="/blog" target="_blank" class="btn btn-outline-secondary rounded-pill px-4 fw-semibold">
-                <i class="ri-external-link-line me-1"></i> Ver Blog Público
-            </a>
-            <!-- Botão redireciona para a rota dedicada /blog-admin/novo -->
-            <a href="/blog-admin/novo" class="btn btn-warning rounded-pill px-4 fw-bold text-dark shadow-sm">
-                <i class="ri-add-line me-1"></i> Escrever Novo Artigo
-            </a>
+    <div class="card border-0 shadow-sm rounded-4 p-4 bg-white mb-4 border-start border-4" style="border-left-color: #4A2338 !important;">
+        <div class="d-flex flex-wrap align-items-center justify-content-between gap-3">
+            <div>
+                <span class="badge px-3 py-1 rounded-pill fw-bold text-uppercase fs-11 mb-1" style="background:#fbf5e8; color: #C5A059;">Painel de Conteúdo</span>
+                <h2 class="fw-bold text-dark mb-0" style="font-family: serif; color: #4A2338;"><i class="ri-article-line text-warning me-2"></i>Gestão de Artigos & Publicações</h2>
+                <small class="text-muted">Escreva novos artigos, edite matérias publicadas ou altere reflexões jurídicas.</small>
+            </div>
+            <div class="d-flex gap-2">
+                <a href="/blog" target="_blank" class="btn btn-outline-dark rounded-pill px-4 fw-semibold fs-14">
+                    <i class="ri-external-link-line me-1"></i> Ver Blog Público
+                </a>
+                <a href="/blog-admin/novo" class="btn text-white rounded-pill px-4 fw-bold shadow-sm fs-14" style="background-color: #4A2338;">
+                    <i class="ri-edit-box-line me-1 text-warning"></i> Escrever Novo Artigo
+                </a>
+            </div>
         </div>
     </div>
 
     <!-- Tabela Principal de Artigos -->
-    <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
+    <div class="card border-0 shadow-sm rounded-4 overflow-hidden bg-white">
         <div class="card-body p-0">
             <div class="table-responsive">
                 <table class="table table-hover align-middle mb-0">
@@ -35,7 +36,6 @@
                             <th>Categoria</th>
                             <th>Autor</th>
                             <th>Leitura</th>
-                            <th>Data</th>
                             <th class="text-end pe-4">Ações</th>
                         </tr>
                     </thead>
@@ -45,7 +45,7 @@
                             <td class="ps-4 fw-bold text-muted">#{{ post.id }}</td>
                             <td>
                                 <div class="d-flex align-items-center gap-3">
-                                    <img src="{{ url_for('static', filename='images/' + (post.image_filename or 'logo_olinda_aguiar.png')) }}"
+                                    <img src="{{ url_for('static', filename='images/' + (post.image_filename or 'karine_perfil.jpg')) }}"
                                          alt="{{ post.title }}"
                                          style="width: 56px; height: 56px; object-fit: cover;"
                                          class="rounded-3 border shadow-xs">
@@ -58,26 +58,27 @@
                                 </div>
                             </td>
                             <td>
-                                <span class="badge bg-warning-subtle text-warning-emphasis px-3 py-1 rounded-pill fw-semibold fs-12">
+                                <span class="badge bg-warning bg-opacity-10 text-dark border border-warning border-opacity-50 rounded-pill px-3 py-1 fs-12 fw-semibold">
                                     {{ post.category }}
                                 </span>
                             </td>
-                            <td><span class="small fw-semibold text-secondary">{{ post.author }}</span></td>
-                            <td><span class="small text-muted"><i class="ri-time-line me-1"></i>{{ post.read_time or '3 min' }}</span></td>
-                            <td><span class="small text-muted">{{ post.created_at.strftime('%d/%m/%Y') if post.created_at else '---' }}</span></td>
+                            <td>
+                                <span class="fw-semibold text-dark fs-14">{{ post.author or 'Karine Mascena' }}</span>
+                            </td>
+                            <td>
+                                <span class="text-muted fs-13"><i class="ri-time-line me-1"></i>{{ post.read_time_minutes or 5 }} min</span>
+                            </td>
                             <td class="text-end pe-4">
-                                <div class="btn-group">
-                                    <a href="/blog/{{ post.slug }}" target="_blank" class="btn btn-sm btn-outline-secondary" title="Visualizar Artigo Público">
-                                        <i class="ri-eye-line"></i>
+                                <div class="d-flex align-items-center justify-content-end gap-2">
+                                    <a href="/blog/{{ post.slug }}" target="_blank" class="btn btn-sm btn-light border rounded-pill px-3 text-secondary" title="Ver Artigo">
+                                        <i class="ri-eye-line me-1"></i> Ver
                                     </a>
-                                    <!-- Redireciona para a rota dedicada de edição -->
-                                    <a href="/blog-admin/editar/{{ post.id }}" class="btn btn-sm btn-outline-warning font-semibold">
-                                        <i class="ri-edit-line me-1"></i> Editar
+                                    <a href="/blog-admin/editar/{{ post.id }}" class="btn btn-sm btn-outline-dark rounded-pill px-3" title="Editar Artigo">
+                                        <i class="ri-pencil-line me-1"></i> Editar
                                     </a>
-                                    <form action="/blog-admin/deletar/{{ post.id }}" method="post" class="d-inline"
-                                          onsubmit="return confirm('Tem certeza que deseja excluir o artigo &quot;{{ post.title }}&quot;?');">
-                                        <button type="submit" class="btn btn-sm btn-outline-danger" title="Excluir Artigo">
-                                            <i class="ri-delete-bin-line"></i>
+                                    <form action="/blog-admin/deletar/{{ post.id }}" method="POST" class="d-inline" onsubmit="return confirm('Deseja excluir este artigo permanentemente?')">
+                                        <button type="submit" class="btn btn-sm btn-outline-danger border-0 rounded-circle p-0 d-inline-flex align-items-center justify-content-center" style="width: 32px; height: 32px;" title="Excluir">
+                                            <i class="ri-delete-bin-line fs-16"></i>
                                         </button>
                                     </form>
                                 </div>
@@ -85,11 +86,12 @@
                         </tr>
                         {% else %}
                         <tr>
-                            <td colspan="7" class="text-center py-5 text-muted">
-                                <i class="ri-article-line fs-32 text-muted d-block mb-2"></i>
-                                Nenhum artigo cadastrado no banco de dados.<br>
-                                <a href="/blog-admin/novo" class="btn btn-warning btn-sm rounded-pill px-4 fw-bold text-dark mt-3">
-                                    <i class="ri-add-line me-1"></i> Escrever o Primeiro Artigo
+                            <td colspan="6" class="text-center py-5">
+                                <i class="ri-article-line display-4 text-muted mb-2 d-block"></i>
+                                <h5 class="fw-bold text-dark">Nenhum artigo cadastrado</h5>
+                                <p class="text-muted mb-3">Clique no botão abaixo para escrever seu primeiro artigo de advocacy e direito tributário.</p>
+                                <a href="/blog-admin/novo" class="btn text-white rounded-pill px-4 fw-bold" style="background-color: #4A2338;">
+                                    <i class="ri-edit-box-line me-1 text-warning"></i> Escrever Novo Artigo
                                 </a>
                             </td>
                         </tr>
@@ -99,6 +101,5 @@
             </div>
         </div>
     </div>
-
 </div>
 {% endblock content %}

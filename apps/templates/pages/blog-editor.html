@@ -1,6 +1,6 @@
 {% extends "layouts/base.html" %}
 
-{% block title %}{% if post %}Editar: {{ post.title }}{% else %}Novo Artigo{% endif %} | Olinda Aguiar ERP{% endblock title %}
+{% block title %}{% if post %}Editar: {{ post.title }}{% else %}Novo Artigo{% endif %} | Karine Mascena{% endblock title %}
 
 {% block extra_css %}
 <!-- Quill Rich Text Editor Theme -->
@@ -159,8 +159,8 @@
                         {% if post %}
                             {{ post.content | safe }}
                         {% else %}
-                            <p>A madeira de demolição é uma verdadeira joia do patrimônio pernambucano. Retiradas de antigos casarios e construções históricas de Recife e Olinda, essas madeiras de lei passaram por décadas de secagem natural, resultando em uma durabilidade incomparável.</p>
-                            <p>Cada ranhura, marca de prego antigo e variação de tom conta uma história. No Atelier Olinda Aguiar, preservamos essa memória viva através de entalhes manuais e acabamentos ecológicos em cera natural.</p>
+                            <p>A Reforma Tributária traz transformações significativas para o ecossistema do Terceiro Setor e para as Organizações da Sociedade Civil (OSCs). A revisão do regime de impostos sobre consumo, doações e imunidades institucionais exige diagnóstico técnico aprofundado e planejamento preventivo.</p>
+                            <p>Através da advocacia multidisciplinar e do advocacy estratégico, construímos soluções jurídicas acessíveis que preservam as finalidades institucionais e asseguram a sustentabilidade regulatória das entidades.</p>
                         {% endif %}
                     </div>
 
@@ -210,7 +210,7 @@
 
                     <!-- Preview da Imagem -->
                     <div class="mb-3 text-center">
-                        {% set current_img = (post.image_filename if post and post.image_filename else 'logo_olinda_aguiar.png') %}
+                        {% set current_img = (post.image_filename if post and post.image_filename else 'karine_perfil.jpg') %}
                         <img id="cover-preview"
                              src="{{ url_for('static', filename='images/' + current_img) }}"
                              alt="Preview da Capa"
@@ -240,7 +240,7 @@
                         <input type="text"
                                name="author"
                                class="form-control"
-                               value="{{ post.author if post else 'Atelier Olinda Aguiar' }}"
+                               value="{{ post.author if post else 'Karine Mascena' }}"
                                required>
                     </div>
 
@@ -249,7 +249,7 @@
                         <input type="text"
                                name="category"
                                class="form-control"
-                               value="{{ post.category if post else 'Arte & Sustentabilidade' }}"
+                               value="{{ post.category if post else 'Reforma Tributária & 3º Setor' }}"
                                required>
                     </div>
 
