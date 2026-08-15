@@ -345,6 +345,14 @@ def blog_post(slug):
     return render_template('pages/blog-post.html', segment='blog', post=post, recent_posts=recent_posts)
 
 
+@blueprint.route('/integracoes')
+def integracoes():
+    """Render the integrations and connections management page."""
+    if not session.get('logged_in'):
+        return redirect(url_for('pages_blueprint.login', next='/integracoes'))
+    return render_template('pages/integracoes.html', segment='integracoes')
+
+
 @blueprint.route('/blog-admin', methods=['GET', 'POST'])
 def blog_admin():
     """Admin ERP panel to manage, create, edit and delete blog posts."""

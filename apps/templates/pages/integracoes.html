@@ -1,0 +1,188 @@
+{% extends 'layouts/vertical.html' %}
+
+{% block title %}Integrações & Conexões | Karine Mascena{% endblock title %}
+
+{% block page_content %}
+<div class="py-4">
+    <!-- HEADER -->
+    <div class="card border-0 shadow-sm rounded-4 p-4 p-md-5 bg-white text-dark mb-4 border-start border-4" style="border-left-color: #4A2338 !important;">
+        <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-3">
+            <div>
+                <span class="badge px-3 py-1 rounded-pill fw-bold text-uppercase fs-11" style="background:#fbf5e8; color: #C5A059;">Conexões do Sistema</span>
+                <h2 class="fw-bold mb-1" style="color: #4A2338; font-family: serif;">Painel de Integrações & APIs</h2>
+                <p class="text-secondary mb-0 fs-14">Acompanhe e gerencie as conexões ativas com redes sociais, canais de atendimento, Diários Oficiais e sistemas de estatísticas.</p>
+            </div>
+            <a href="/index" class="btn btn-outline-dark rounded-pill px-4 fw-semibold fs-14">
+                <i class="ri-arrow-left-line me-1"></i> Voltar ao Painel
+            </a>
+        </div>
+    </div>
+
+    <!-- CARDS DE INTEGRAÇÕES -->
+    <div class="row g-4 mb-4">
+
+        <!-- 1. WHATSAPP DIRECT -->
+        <div class="col-md-6 col-lg-4">
+            <div class="card border-0 shadow-sm rounded-4 p-4 bg-white h-100 border-top border-4 border-success">
+                <div class="d-flex align-items-center justify-content-between mb-3">
+                    <div class="d-flex align-items-center gap-3">
+                        <div class="rounded-3 p-2.5 bg-success bg-opacity-10 text-success fs-24">
+                            <i class="ri-whatsapp-fill"></i>
+                        </div>
+                        <div>
+                            <h5 class="fw-bold text-dark mb-0">WhatsApp Direct</h5>
+                            <small class="text-muted fs-12">Atendimento Imediato</small>
+                        </div>
+                    </div>
+                    <span class="badge bg-success bg-opacity-10 text-success border border-success border-opacity-25 rounded-pill px-2.5 py-1 fs-11">
+                        <i class="ri-checkbox-circle-fill me-1"></i>Conectado
+                    </span>
+                </div>
+                <p class="text-secondary fs-13 mb-3">
+                    Conectado ao número <strong>(81) 9 8447-2771</strong> para início de atendimento automático e recebimento de mensagens dos clientes.
+                </p>
+                <div class="pt-3 border-top mt-auto d-flex align-items-center justify-content-between">
+                    <small class="text-muted fs-11"><i class="ri-refresh-line me-1"></i>Sincronizado hoje</small>
+                    <a href="https://wa.me/5581984472771" target="_blank" class="btn btn-sm btn-outline-success rounded-pill px-3">Testar Canal</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2. LINKEDIN -->
+        <div class="col-md-6 col-lg-4">
+            <div class="card border-0 shadow-sm rounded-4 p-4 bg-white h-100 border-top border-4 border-primary">
+                <div class="d-flex align-items-center justify-content-between mb-3">
+                    <div class="d-flex align-items-center gap-3">
+                        <div class="rounded-3 p-2.5 bg-primary bg-opacity-10 text-primary fs-24">
+                            <i class="ri-linkedin-fill"></i>
+                        </div>
+                        <div>
+                            <h5 class="fw-bold text-dark mb-0">LinkedIn Profile</h5>
+                            <small class="text-muted fs-12">Rede Profissional</small>
+                        </div>
+                    </div>
+                    <span class="badge bg-success bg-opacity-10 text-success border border-success border-opacity-25 rounded-pill px-2.5 py-1 fs-11">
+                        <i class="ri-checkbox-circle-fill me-1"></i>Sincronizado
+                    </span>
+                </div>
+                <p class="text-secondary fs-13 mb-3">
+                    Perfil integrado: <strong>in/karinemascena</strong>. Permite divulgar artigos e posicionamentos de advocacy diretamente na rede.
+                </p>
+                <div class="pt-3 border-top mt-auto d-flex align-items-center justify-content-between">
+                    <small class="text-muted fs-11"><i class="ri-time-line me-1"></i>API v2 Ativa</small>
+                    <a href="https://www.linkedin.com/in/karinemascena/" target="_blank" class="btn btn-sm btn-outline-primary rounded-pill px-3">Ver Perfil</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3. INSTAGRAM -->
+        <div class="col-md-6 col-lg-4">
+            <div class="card border-0 shadow-sm rounded-4 p-4 bg-white h-100 border-top border-4 border-danger">
+                <div class="d-flex align-items-center justify-content-between mb-3">
+                    <div class="d-flex align-items-center gap-3">
+                        <div class="rounded-3 p-2.5 bg-danger bg-opacity-10 text-danger fs-24">
+                            <i class="ri-instagram-line"></i>
+                        </div>
+                        <div>
+                            <h5 class="fw-bold text-dark mb-0">Instagram Graph</h5>
+                            <small class="text-muted fs-12">Conteúdo & Publicações</small>
+                        </div>
+                    </div>
+                    <span class="badge bg-success bg-opacity-10 text-success border border-success border-opacity-25 rounded-pill px-2.5 py-1 fs-11">
+                        <i class="ri-checkbox-circle-fill me-1"></i>Conectado
+                    </span>
+                </div>
+                <p class="text-secondary fs-13 mb-3">
+                    Perfil <strong>@karinemascena</strong> vinculado para exibição de botões diretos e compartilhamento de conteúdos.
+                </p>
+                <div class="pt-3 border-top mt-auto d-flex align-items-center justify-content-between">
+                    <small class="text-muted fs-11"><i class="ri-shield-check-line me-1"></i>Token Ativo</small>
+                    <a href="https://www.instagram.com/karinemascena/" target="_blank" class="btn btn-sm btn-outline-danger rounded-pill px-3">Abrir Perfil</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- 4. DIÁRIOS OFICIAIS & TRIBUNAIS -->
+        <div class="col-md-6 col-lg-4">
+            <div class="card border-0 shadow-sm rounded-4 p-4 bg-white h-100 border-top border-4 border-warning">
+                <div class="d-flex align-items-center justify-content-between mb-3">
+                    <div class="d-flex align-items-center gap-3">
+                        <div class="rounded-3 p-2.5 bg-warning bg-opacity-10 text-warning fs-24">
+                            <i class="ri-scales-3-line"></i>
+                        </div>
+                        <div>
+                            <h5 class="fw-bold text-dark mb-0">Diários & Justiça</h5>
+                            <small class="text-muted fs-12">TJPE / TRF5 / STJ</small>
+                        </div>
+                    </div>
+                    <span class="badge bg-warning text-dark border rounded-pill px-2.5 py-1 fs-11">
+                        <i class="ri-radar-line me-1"></i>Monitorando
+                    </span>
+                </div>
+                <p class="text-secondary fs-13 mb-3">
+                    Monitoramento automático de publicações, andamentos de processos e intimações no OAB/PE de Karine Mascena.
+                </p>
+                <div class="pt-3 border-top mt-auto d-flex align-items-center justify-content-between">
+                    <small class="text-muted fs-11"><i class="ri-check-double-line me-1"></i>Varredura diária</small>
+                    <button class="btn btn-sm btn-light border rounded-pill px-3">Configurar Alertas</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 5. GOOGLE ANALYTICS -->
+        <div class="col-md-6 col-lg-4">
+            <div class="card border-0 shadow-sm rounded-4 p-4 bg-white h-100 border-top border-4 border-info">
+                <div class="d-flex align-items-center justify-content-between mb-3">
+                    <div class="d-flex align-items-center gap-3">
+                        <div class="rounded-3 p-2.5 bg-info bg-opacity-10 text-info fs-24">
+                            <i class="ri-line-chart-line"></i>
+                        </div>
+                        <div>
+                            <h5 class="fw-bold text-dark mb-0">Google Analytics GA4</h5>
+                            <small class="text-muted fs-12">Métricas de Acesso</small>
+                        </div>
+                    </div>
+                    <span class="badge bg-success bg-opacity-10 text-success border border-success border-opacity-25 rounded-pill px-2.5 py-1 fs-11">
+                        <i class="ri-checkbox-circle-fill me-1"></i>Ativo
+                    </span>
+                </div>
+                <p class="text-secondary fs-13 mb-3">
+                    Acompanhamento de acessos à Landing Page, contagem de cliques em links de WhatsApp e leitura dos artigos do blog.
+                </p>
+                <div class="pt-3 border-top mt-auto d-flex align-items-center justify-content-between">
+                    <small class="text-muted fs-11"><i class="ri-eye-line me-1"></i>Rastreamento ON</small>
+                    <button class="btn btn-sm btn-light border rounded-pill px-3">Relatórios</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 6. E-MAIL INSTITUCIONAL -->
+        <div class="col-md-6 col-lg-4">
+            <div class="card border-0 shadow-sm rounded-4 p-4 bg-white h-100 border-top border-4" style="border-top-color: #4A2338 !important;">
+                <div class="d-flex align-items-center justify-content-between mb-3">
+                    <div class="d-flex align-items-center gap-3">
+                        <div class="rounded-3 p-2.5 bg-dark bg-opacity-10 text-dark fs-24">
+                            <i class="ri-mail-send-line"></i>
+                        </div>
+                        <div>
+                            <h5 class="fw-bold text-dark mb-0">E-mail Institucional</h5>
+                            <small class="text-muted fs-12">SMTP & Notificações</small>
+                        </div>
+                    </div>
+                    <span class="badge bg-success bg-opacity-10 text-success border border-success border-opacity-25 rounded-pill px-2.5 py-1 fs-11">
+                        <i class="ri-checkbox-circle-fill me-1"></i>Configurado
+                    </span>
+                </div>
+                <p class="text-secondary fs-13 mb-3">
+                    Disparo de relatórios periódicos em PDF, confirmações de consulta e avisos de novos pareceres aos clientes.
+                </p>
+                <div class="pt-3 border-top mt-auto d-flex align-items-center justify-content-between">
+                    <small class="text-muted fs-11"><i class="ri-shield-keyhole-line me-1"></i>TLS Seguro</small>
+                    <button class="btn btn-sm btn-light border rounded-pill px-3">Editar SMTP</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock page_content %}
