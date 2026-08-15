@@ -10,7 +10,7 @@ services:
       - "traefik.http.routers.karine-http.entrypoints=http"
       - "traefik.http.routers.karine-http.middlewares=karine-redirect"
       - "traefik.http.middlewares.karine-redirect.redirectscheme.scheme=https"
-      - "traefik.http.routers.karine.rule=Host(`karinemascena.com.br`) || Host(`www.karinemascena.com.br`)"
+      - "traefik.http.routers.karine.rule=Host(`karinemascena.com.br`)"
       - "traefik.http.routers.karine.entrypoints=https"
       - "traefik.http.routers.karine.tls=true"
       - "traefik.http.routers.karine.tls.certresolver=letsencrypt"
