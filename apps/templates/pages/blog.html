@@ -1,11 +1,11 @@
 {% extends "layouts/base.html" %}
 
-{% block title %}Blog | Olinda Aguiar - Artes em Madeira{% endblock title %}
+{% block title %}Artigos & Perspectivas | Karine Mascena{% endblock title %}
 
 {% block content %}
 <style>
     .blog-header-bg {
-        background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+        background: linear-gradient(135deg, #1e1018 0%, #4A2338 100%);
         color: #fff;
     }
     .blog-card {
@@ -17,8 +17,8 @@
     }
     .blog-card:hover {
         transform: translateY(-5px);
-        box-shadow: 0 20px 40px rgba(15, 23, 42, 0.14);
-        border-color: #d97706;
+        box-shadow: 0 20px 40px rgba(74, 35, 56, 0.14);
+        border-color: #C5A059;
     }
     .blog-card:hover .blog-card-img {
         transform: scale(1.04);
@@ -40,12 +40,14 @@
         top: 14px;
         left: 14px;
         z-index: 2;
+        background: #C5A059 !important;
+        color: #fff !important;
     }
     .blog-read-time {
         position: absolute;
         bottom: 12px;
         right: 14px;
-        background: rgba(15, 23, 42, 0.65);
+        background: rgba(30, 16, 24, 0.75);
         color: #fff;
         font-size: 0.75rem;
         padding: 3px 10px;
@@ -57,7 +59,7 @@
         height: 32px;
         border-radius: 50%;
         object-fit: cover;
-        border: 2px solid #d97706;
+        border: 2px solid #C5A059;
     }
 </style>
 
@@ -67,16 +69,16 @@
         <div class="row align-items-center justify-content-between">
             <div class="col-lg-8">
                 <a href="/" class="btn btn-outline-light rounded-pill px-3 py-1 mb-3 small d-inline-flex align-items-center gap-1">
-                    <i class="ri-arrow-left-line"></i> Voltar ao Atelier
+                    <i class="ri-arrow-left-line"></i> Voltar ao Início
                 </a>
-                <span class="badge bg-warning text-dark px-3 py-1.5 rounded-pill fw-bold text-uppercase d-block mb-2 style-badge" style="width: fit-content;">Diário do Atelier</span>
-                <h1 class="display-5 fw-extrabold text-white mb-2">Blog Olinda Aguiar</h1>
-                <p class="lead text-light opacity-87 mb-0" style="max-width: 650px;">
-                    Histórias, sustentabilidade, liderança feminina e bastidores da criação artística em madeira de demolição.
+                <span class="badge px-3 py-1.5 rounded-pill fw-bold text-uppercase d-block mb-2 style-badge" style="width: fit-content; background: #fbf5e8; color: #C5A059;">Artigos & Publicações</span>
+                <h1 class="display-5 fw-extrabold text-white mb-2" style="font-family: serif;">Artigos & Perspectivas Jurídicas</h1>
+                <p class="lead text-light opacity-90 mb-0" style="max-width: 680px;">
+                    Reflexões sobre Direito Tributário, Terceiro Setor, impactos da Reforma Tributária e articulação de pautas de impacto social.
                 </p>
             </div>
             <div class="col-lg-4 text-lg-end mt-4 mt-lg-0">
-                <img src="{{ url_for('static', filename='images/logo_icon.png') }}" alt="Emblema Olinda Aguiar" style="max-height: 95px; filter: drop-shadow(0 4px 12px rgba(0,0,0,0.5));">
+                <img src="{{ config.ASSETS_ROOT }}/images/logo_kom_white.png?v=2" alt="Karine Mascena Logo" style="max-height: 85px; width: auto; filter: drop-shadow(0 4px 12px rgba(0,0,0,0.5));">
             </div>
         </div>
     </div>
@@ -91,45 +93,45 @@
 
                 <!-- Imagem de Capa -->
                 <a href="/blog/{{ post.slug }}" class="blog-card-img-wrap d-block">
-                    <img src="{{ url_for('static', filename='images/' + (post.image_filename or 'logo_olinda_aguiar.png')) }}"
+                    <img src="{{ url_for('static', filename='images/' + (post.image_filename or 'karine_perfil.jpg')) }}"
                          alt="{{ post.title }}"
                          class="blog-card-img">
-                    <span class="blog-cat-badge badge bg-warning text-dark fw-bold text-uppercase fs-11 px-3 py-1 rounded-pill shadow-sm">
+                    <span class="blog-cat-badge badge fw-bold text-uppercase fs-11 px-3 py-1 rounded-pill shadow-sm">
                         {{ post.category }}
                     </span>
                     <span class="blog-read-time">
-                        <i class="ri-time-line me-1"></i>{{ post.read_time or '3 min' }}
+                        <i class="ri-time-line me-1"></i>{{ post.read_time_minutes }} min de leitura
                     </span>
                 </a>
 
-                <!-- Corpo do Card -->
-                <div class="p-4 d-flex flex-column h-100" style="flex: 1;">
-
-                    <!-- Data -->
-                    <div class="text-muted small mb-2">
-                        <i class="ri-calendar-line me-1"></i>
-                        {{ post.created_at.strftime('%d/%m/%Y') if post.created_at else '09/08/2026' }}
+                <!-- Conteúdo -->
+                <div class="card-body p-4 d-flex flex-column">
+                    <div class="d-flex align-items-center gap-2 mb-2 text-muted fs-12">
+                        <i class="ri-calendar-line text-warning"></i>
+                        <span>{{ post.created_at.strftime('%d/%m/%Y') if post.created_at else 'Recente' }}</span>
                     </div>
 
-                    <!-- Título -->
-                    <h3 class="fw-bold text-dark mb-2 lh-sm fs-20">
-                        <a href="/blog/{{ post.slug }}" class="text-dark text-decoration-none hover-warning">{{ post.title }}</a>
-                    </h3>
+                    <h5 class="fw-bold text-dark mb-2">
+                        <a href="/blog/{{ post.slug }}" class="text-dark text-decoration-none hover-primary">
+                            {{ post.title }}
+                        </a>
+                    </h5>
 
-                    <!-- Resumo -->
-                    <p class="text-secondary fs-14 mb-4 leading-relaxed flex-grow-1">
-                        {{ post.subtitle or (post.content | striptags | truncate(110)) }}
+                    <p class="text-secondary fs-14 mb-4 flex-grow-1" style="display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;">
+                        {{ post.summary }}
                     </p>
 
-                    <!-- Rodapé: Autor + Botão -->
-                    <div class="mt-auto pt-3 border-top d-flex align-items-center justify-content-between">
+                    <!-- Autor & Botão -->
+                    <div class="pt-3 border-top d-flex align-items-center justify-content-between mt-auto">
                         <div class="d-flex align-items-center gap-2">
-                            <img src="{{ url_for('static', filename='images/logo_icon.png') }}"
-                                 class="author-micro-avatar bg-dark p-0-5"
-                                 alt="{{ post.author }}">
-                            <span class="small fw-semibold text-dark">{{ post.author }}</span>
+                            <img src="{{ config.ASSETS_ROOT }}/images/karine_perfil.jpg" alt="Karine Mascena" class="author-micro-avatar">
+                            <div>
+                                <strong class="d-block text-dark fs-13 lh-1">Karine Mascena</strong>
+                                <small class="text-muted fs-11">Advogada</small>
+                            </div>
                         </div>
-                        <a href="/blog/{{ post.slug }}" class="btn btn-sm btn-warning rounded-pill px-3 fw-bold text-dark">
+
+                        <a href="/blog/{{ post.slug }}" class="btn btn-sm btn-outline-dark rounded-pill px-3">
                             Ler <i class="ri-arrow-right-line ms-1"></i>
                         </a>
                     </div>
@@ -137,7 +139,15 @@
 
             </article>
         </div>
+        {% else %}
+        <div class="col-12 text-center py-5">
+            <i class="ri-article-line display-4 text-muted mb-3 d-block"></i>
+            <h4 class="fw-bold text-dark">Nenhum artigo publicado no momento</h4>
+            <p class="text-muted">Novas publicações sobre Direito Tributário e Terceiro Setor serão disponibilizadas em breve.</p>
+            <a href="/" class="btn btn-primary rounded-pill px-4" style="background-color: #4A2338; border-color: #4A2338;">Voltar ao Início</a>
+        </div>
         {% endfor %}
     </div>
 </div>
+
 {% endblock content %}
