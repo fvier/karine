@@ -1,15 +1,29 @@
 {% extends 'layouts/base.html' %}
 
-{% block title %}Entrar no Painel | Olinda Aguiar{% endblock title %}
+{% block title %}Acesso Restrito | Karine Mascena{% endblock title %}
 
 {% block body_attribute %}class="authentication-bg"{% endblock body_attribute %}
 
 {% block extra_css %}
 <style>
-    .login-panel { max-width: 420px; }
-    .login-panel .card-body { padding: 2rem; }
-    .login-panel .form-control { min-height: 42px; }
-    .login-brand { height: 44px; width: auto; }
+    .authentication-bg {
+        background: radial-gradient(circle at 10% 10%, rgba(74,35,56,0.12), transparent 30%), radial-gradient(circle at 90% 90%, rgba(197,160,89,0.15), transparent 30%), #f8fafc;
+        min-height: 100vh;
+    }
+    .login-panel { max-width: 440px; }
+    .login-panel .card-body { padding: 2.2rem; }
+    .login-panel .form-control { min-height: 44px; border-radius: 10px; }
+    .login-brand { height: 56px; width: auto; }
+    .btn-km-primary {
+        background-color: #4A2338;
+        border-color: #4A2338;
+        color: #fff;
+    }
+    .btn-km-primary:hover {
+        background-color: #381a2b;
+        border-color: #381a2b;
+        color: #fff;
+    }
     @media (max-width: 575.98px) {
         .login-panel .card-body { padding: 1.5rem; }
         .account-pages { padding: 1rem 0 !important; }
@@ -18,7 +32,7 @@
 {% endblock extra_css %}
 
 {% block content %}
-<div class="account-pages py-3">
+<div class="account-pages py-4 d-flex align-items-center min-vh-100">
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-12 col-sm-9 col-md-7 col-lg-5 login-panel">
@@ -26,15 +40,15 @@
                     <div class="card-body">
                         <div class="mx-auto mb-3 text-center auth-logo">
                             <a href="/" class="d-inline-flex align-items-center justify-content-center text-decoration-none">
-                                <img src="{{ config.ASSETS_ROOT }}/images/logo_olinda_aguiar.png" alt="Olinda Aguiar" class="login-brand rounded-2 shadow-sm">
+                                <img src="{{ config.ASSETS_ROOT }}/images/logo_kom_dark.png?v=2" alt="Karine Mascena" class="login-brand">
                             </a>
                         </div>
-                        <h1 class="fw-bold text-center fs-20 text-primary mb-1">Acessar Olinda Aguiar</h1>
-                        <p class="text-muted text-center small mb-3">Informe seus dados para entrar no painel interno.</p>
+                        <h1 class="fw-bold text-center fs-20 mb-1" style="color: #4A2338; font-family: serif;">Karine Mascena</h1>
+                        <p class="text-muted text-center small mb-4">Informe suas credenciais para acessar a área restrita.</p>
 
                         {% if request.args.get('msg') == 'login_required' %}
                         <div class="alert alert-warning alert-dismissible fade show rounded-3 fs-14 mb-4" role="alert">
-                            <i class="ri-alert-line me-1"></i> Acesso restrito! Por favor, faça login para acessar o painel.
+                            <i class="ri-alert-line me-1"></i> Acesso restrito! Por favor, faça login para continuar.
                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
                         {% endif %}
@@ -48,25 +62,25 @@
 
                         {% if request.args.get('msg') == 'inactive_user' %}
                         <div class="alert alert-danger rounded-3 fs-14 mb-4" role="alert">
-                            <i class="ri-user-forbid-line me-1"></i> Esta conta está desativada. Procure um administrador.
+                            <i class="ri-user-forbid-line me-1"></i> Esta conta está desativada. Entre em contato com a administração.
                         </div>
                         {% endif %}
 
                         <div>
                             <form action="/login{% if request.args.get('next') %}?next={{ request.args.get('next') }}{% endif %}" method="POST" class="authentication-form">
                                 <div class="mb-3">
-                                    <label class="form-label fw-semibold" for="user-email">E-mail ou Usuário</label>
-                                    <input class="form-control bg-light border-0"
-                                           id="user-email" name="email" placeholder="seu@email.com.br"
+                                    <label class="form-label fw-semibold text-dark" for="user-email">E-mail ou Usuário</label>
+                                    <input class="form-control bg-light border border-light-subtle"
+                                           id="user-email" name="email" placeholder="seu@email.com"
                                            type="text" required autocomplete="username"/>
                                 </div>
                                 <div class="mb-3">
                                     <a class="float-end text-muted text-decoration-underline ms-1 small" href="/auth-password">Esqueceu a senha?</a>
-                                    <label class="form-label fw-semibold" for="user-password">Senha</label>
+                                    <label class="form-label fw-semibold text-dark" for="user-password">Senha</label>
                                     <div class="input-group">
-                                        <input class="form-control bg-light border-0"
+                                        <input class="form-control bg-light border border-light-subtle"
                                                id="user-password" name="password" placeholder="Digite sua senha" type="password" required autocomplete="current-password"/>
-                                        <button class="btn btn-light border-0 text-muted px-3" type="button" id="toggle-password" title="Mostrar ou ocultar senha">
+                                        <button class="btn btn-light border border-light-subtle text-muted px-3" type="button" id="toggle-password" title="Mostrar ou ocultar senha">
                                             <i class="ri-eye-line" id="toggle-password-icon"></i>
                                         </button>
                                     </div>
@@ -74,12 +88,12 @@
                                 <div class="mb-3">
                                     <div class="form-check">
                                         <input class="form-check-input" id="checkbox-signin" type="checkbox" checked/>
-                                        <label class="form-check-label small" for="checkbox-signin">Lembrar neste navegador</label>
+                                        <label class="form-check-label small text-muted" for="checkbox-signin">Lembrar neste navegador</label>
                                     </div>
                                 </div>
                                 <div class="d-grid">
-                                    <button class="btn btn-primary py-2 fw-bold rounded-3" type="submit">
-                                        <i class="ri-login-box-line me-1"></i> Acessar Painel
+                                    <button class="btn btn-km-primary py-2.5 fw-bold rounded-3 shadow-sm" type="submit">
+                                        <i class="ri-login-box-line me-1 text-warning"></i> Entrar no Sistema
                                     </button>
                                 </div>
                             </form>
@@ -87,8 +101,8 @@
                     </div> <!-- end card-body -->
                 </div> <!-- end card -->
 
-                <div class="text-center mt-2">
-                    <a href="/" class="text-white text-decoration-none fw-semibold">
+                <div class="text-center mt-3">
+                    <a href="/" class="text-secondary text-decoration-none fw-semibold small">
                         <i class="ri-arrow-left-line me-1"></i> Voltar para o início
                     </a>
                 </div>
@@ -98,13 +112,13 @@
 </div>
 <script>
     document.getElementById('toggle-password')?.addEventListener('click', function () {
-        const passwordInput = document.getElementById('user-password');
+        const input = document.getElementById('user-password');
         const icon = document.getElementById('toggle-password-icon');
-        if (passwordInput.type === 'password') {
-            passwordInput.type = 'text';
+        if (input.type === 'password') {
+            input.type = 'text';
             icon.className = 'ri-eye-off-line';
         } else {
-            passwordInput.type = 'password';
+            input.type = 'password';
             icon.className = 'ri-eye-line';
         }
     });
