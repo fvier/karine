@@ -9,12 +9,14 @@
         <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-3">
             <div>
                 <span class="badge px-3 py-1 rounded-pill fw-bold text-uppercase fs-11" style="background:#fbf5e8; color: #C5A059;">Painel de Fotos do Carrossel</span>
-                <h2 class="fw-bold mb-1" style="color: #4A2338; font-family: serif;">Gestão de Fotos da Capa (Carrossel)</h2>
-                <p class="text-secondary mb-0 fs-14">Gerencie as imagens de fundo que aparecem na tela inicial (Hero) do site oficial.</p>
+                <h2 class="fw-bold mb-1" style="color: #4A2338; font-family: serif;">Gestão & Visualização do Carrossel</h2>
+                <p class="text-secondary mb-0 fs-14">Gerencie, visualize e ative as imagens de fundo que aparecem na capa (Hero) do site oficial.</p>
             </div>
-            <a href="/" target="_blank" class="btn btn-outline-dark rounded-pill px-4 fw-semibold fs-14">
-                <i class="ri-external-link-line me-1"></i> Visualizar no Site
-            </a>
+            <div class="d-flex gap-2">
+                <a href="/" target="_blank" class="btn btn-outline-dark rounded-pill px-4 fw-semibold fs-14">
+                    <i class="ri-external-link-line me-1"></i> Ver no Site Público
+                </a>
+            </div>
         </div>
     </div>
 
@@ -30,23 +32,23 @@
                     <div class="mb-3">
                         <label class="form-label fw-semibold text-dark fs-14" for="carousel_image">Selecione a Imagem (JPG/PNG)</label>
                         <input class="form-control bg-light border" type="file" id="carousel_image" name="carousel_image" accept="image/*" required>
-                        <small class="text-muted fs-12 d-block mt-1">Recomendado: Fotos de alta resolução orientadas verticalmente ou horizontais.</small>
+                        <small class="text-muted fs-12 d-block mt-1">Fotos com resolução nítida e boa iluminação.</small>
                     </div>
 
                     <div class="mb-3">
-                        <label class="form-label fw-semibold text-dark fs-14" for="title">Título / Identificação da Foto</label>
-                        <input class="form-control bg-light border" type="text" id="title" name="title" placeholder="Ex: Karine Mascena - Atendimento" required>
+                        <label class="form-label fw-semibold text-dark fs-14" for="title">Título / Descrição da Foto</label>
+                        <input class="form-control bg-light border" type="text" id="title" name="title" placeholder="Ex: Karine Mascena - Foto de Perfil" required>
                     </div>
 
                     <div class="mb-4">
                         <div class="form-check form-switch">
                             <input class="form-check-input" type="checkbox" id="set_active" name="set_active" checked>
-                            <label class="form-check-label fw-semibold text-dark fs-14" for="set_active">Ativar no Carrossel Inicial</label>
+                            <label class="form-check-label fw-semibold text-dark fs-14" for="set_active">Ativar Imediatamente no Fundo</label>
                         </div>
                     </div>
 
                     <button type="submit" class="btn text-white w-100 py-2.5 fw-bold rounded-3 shadow-sm" style="background-color: #4A2338;">
-                        <i class="ri-add-circle-line me-1 text-warning"></i> Enviar Foto
+                        <i class="ri-add-circle-line me-1 text-warning"></i> Enviar Imagem
                     </button>
                 </form>
             </div>
@@ -58,19 +60,21 @@
                 <div class="card border-0 shadow-sm rounded-4 p-4 bg-white mb-4">
                     <div class="d-flex align-items-center justify-content-between mb-4 pb-3 border-bottom">
                         <div>
-                            <h5 class="fw-bold text-dark mb-1" style="font-family: serif; color: #4A2338;">Fotos Cadastradas no Sistema</h5>
-                            <small class="text-muted">Selecione as fotos que deseja manter ativas no fundo da capa.</small>
+                            <h5 class="fw-bold text-dark mb-1" style="font-family: serif; color: #4A2338;">Galeria de Imagens da Capa</h5>
+                            <small class="text-muted">Marque as fotos desejadas e clique em "Salvar Alterações".</small>
                         </div>
                         <button type="submit" class="btn btn-warning text-dark fw-bold rounded-pill px-4 shadow-sm fs-14">
-                            <i class="ri-save-3-line me-1"></i> Salvar Seleção
+                            <i class="ri-save-3-line me-1"></i> Salvar Alterações
                         </button>
                     </div>
 
                     <div class="row g-3">
                         {% for image in carousel_images %}
                         <div class="col-md-6">
-                            <div class="card h-100 border {% if image.active %}border-warning bg-light-subtle{% else %}border-light-subtle opacity-75{% endif %} rounded-3 overflow-hidden shadow-sm">
-                                <div class="position-relative" style="height: 200px; overflow: hidden; background: #1e1018;">
+                            <div class="card h-100 border {% if image.active %}border-warning bg-light-subtle{% else %}border-light-subtle opacity-85{% endif %} rounded-3 overflow-hidden shadow-sm hover-lift">
+                                <!-- Thumb Interativo de Visualização -->
+                                <div class="position-relative group-preview" style="height: 220px; overflow: hidden; background: #1e1018; cursor: pointer;"
+                                     onclick="openPreviewModal('{{ config.ASSETS_ROOT }}/images/{{ image.filename }}?v={{ image.version }}', '{{ image.title }}')">
                                     <img src="{{ config.ASSETS_ROOT }}/images/{{ image.filename }}?v={{ image.version }}" 
                                          alt="{{ image.title }}" 
                                          class="w-100 h-100 object-fit-cover">
@@ -78,7 +82,15 @@
                                     <span class="position-absolute top-0 start-0 m-2 badge {% if image.active %}bg-success{% else %}bg-secondary{% endif %} rounded-pill shadow-sm fs-11">
                                         {% if image.active %}<i class="ri-checkbox-circle-line me-1"></i>Ativa no Fundo{% else %}Inativa{% endif %}
                                     </span>
+
+                                    <!-- Botão Overlay de Zoom -->
+                                    <div class="position-absolute inset-0 bg-dark bg-opacity-40 d-flex align-items-center justify-content-center opacity-0 hover-opacity-100 transition-all" style="backdrop-filter: blur(2px);">
+                                        <span class="btn btn-sm btn-light rounded-pill px-3 shadow fw-semibold">
+                                            <i class="ri-zoom-in-line me-1 text-primary"></i> Clique para Ampliar
+                                        </span>
+                                    </div>
                                 </div>
+
                                 <div class="card-body p-3">
                                     <h6 class="fw-bold text-dark mb-2 text-truncate" title="{{ image.title }}">{{ image.title }}</h6>
                                     
@@ -88,13 +100,20 @@
                                             <label class="form-check-label small fw-semibold text-dark" for="check_img_{{ image.id }}">Exibir no Fundo</label>
                                         </div>
 
-                                        <a href="/gerenciar-carrossel/deletar/{{ image.id }}" 
-                                           onclick="return confirm('Tem certeza que deseja excluir esta foto do carrossel?')" 
-                                           class="btn btn-sm btn-outline-danger border-0 rounded-circle p-0 d-inline-flex align-items-center justify-content-center" 
-                                           style="width: 32px; height: 32px;" 
-                                           title="Excluir Imagem">
-                                            <i class="ri-delete-bin-line fs-16"></i>
-                                        </a>
+                                        <div class="d-flex align-items-center gap-1">
+                                            <button type="button" 
+                                                    class="btn btn-sm btn-outline-secondary rounded-pill px-2.5 py-1 fs-12"
+                                                    onclick="openPreviewModal('{{ config.ASSETS_ROOT }}/images/{{ image.filename }}?v={{ image.version }}', '{{ image.title }}')">
+                                                <i class="ri-eye-line me-1"></i> Ver
+                                            </button>
+                                            <a href="/gerenciar-carrossel/deletar/{{ image.id }}" 
+                                               onclick="return confirm('Tem certeza que deseja excluir esta foto do carrossel?')" 
+                                               class="btn btn-sm btn-outline-danger border-0 rounded-circle p-0 d-inline-flex align-items-center justify-content-center" 
+                                               style="width: 30px; height: 30px;" 
+                                               title="Excluir Imagem">
+                                                <i class="ri-delete-bin-line fs-16"></i>
+                                            </a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -112,4 +131,42 @@
         </div>
     </div>
 </div>
+
+<!-- MODAL DE VISUALIZACAO DE IMAGEM EM TAMANHO CHEIO -->
+<div class="modal fade" id="imagePreviewModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content border-0 rounded-4 overflow-hidden shadow-lg bg-dark text-white">
+            <div class="modal-header border-0 pb-0 bg-dark text-white">
+                <h5 class="modal-title fw-bold" id="previewModalTitle" style="font-family: serif;">Visualizar Foto</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Fechar"></button>
+            </div>
+            <div class="modal-body text-center p-3">
+                <img id="previewModalImage" src="" alt="Visualização" class="img-fluid rounded-3 shadow" style="max-height: 70vh; object-fit: contain;">
+            </div>
+            <div class="modal-footer border-0 pt-0 justify-content-between">
+                <a id="previewModalDownload" href="#" target="_blank" class="btn btn-sm btn-outline-light rounded-pill px-3">
+                    <i class="ri-external-link-line me-1"></i> Abrir Imagem em Nova Aba
+                </a>
+                <button type="button" class="btn btn-sm btn-secondary rounded-pill px-4" data-bs-dismiss="modal">Fechar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function openPreviewModal(imageUrl, imageTitle) {
+        document.getElementById('previewModalImage').src = imageUrl;
+        document.getElementById('previewModalTitle').innerText = imageTitle || 'Visualizar Foto';
+        document.getElementById('previewModalDownload').href = imageUrl;
+        
+        const previewModal = new bootstrap.Modal(document.getElementById('imagePreviewModal'));
+        previewModal.show();
+    }
+</script>
+
+<style>
+    .group-preview:hover .hover-opacity-100 {
+        opacity: 1 !important;
+    }
+</style>
 {% endblock page_content %}
