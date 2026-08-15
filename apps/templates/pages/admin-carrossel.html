@@ -30,9 +30,22 @@
 
                 <form action="/gerenciar-carrossel/upload" method="POST" enctype="multipart/form-data">
                     <div class="mb-3">
-                        <label class="form-label fw-semibold text-dark fs-14" for="carousel_image">Selecione a Imagem (JPG/PNG)</label>
+                        <label class="form-label fw-semibold text-dark fs-14" for="carousel_image">Selecione a Imagem (JPG/PNG/WEBP)</label>
                         <input class="form-control bg-light border" type="file" id="carousel_image" name="carousel_image" accept="image/*" required>
-                        <small class="text-muted fs-12 d-block mt-1">Fotos com resolução nítida e boa iluminação.</small>
+                    </div>
+
+                    <!-- CARD DE GUIA DE DIMENSÕES -->
+                    <div class="p-3 mb-3 rounded-3 border border-warning-subtle" style="background-color: #fbf5e8; color: #4A2338;">
+                        <h6 class="fw-bold mb-2 d-flex align-items-center gap-1.5 fs-13 text-uppercase" style="color: #4A2338; letter-spacing: 0.03em;">
+                            <i class="ri-ruler-2-line fs-16 text-warning"></i> Guia de Dimensões & Formato
+                        </h6>
+                        <ul class="mb-0 ps-3 fs-12 text-secondary lh-relaxed">
+                            <li><strong>Resolução Ideal</strong>: <code>1920 × 1080 px</code> (Widescreen) ou <code>1200 × 1600 px</code> (Retrato).</li>
+                            <li><strong>Proporção</strong>: 16:9 ou 3:4.</li>
+                            <li><strong>Peso Máximo</strong>: Até <code>8 MB</code> por foto.</li>
+                            <li><strong>Formatos</strong>: <code>.JPG</code>, <code>.PNG</code> ou <code>.WEBP</code>.</li>
+                            <li><strong>Dica de Foto</strong>: Prefira imagens com alta nitidez, boa luz e enquadramento limpo.</li>
+                        </ul>
                     </div>
 
                     <div class="mb-3">
