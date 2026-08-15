@@ -6,9 +6,11 @@ services:
     restart: unless-stopped
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.karine-http.rule=Host(`karinemascena.adv.br`) || Host(`147.79.110.132`)"
+      - "traefik.http.routers.karine-http.rule=Host(`karinemascena.com.br`) || Host(`www.karinemascena.com.br`) || Host(`karinemascena.adv.br`) || Host(`147.79.110.132`)"
       - "traefik.http.routers.karine-http.entrypoints=http"
-      - "traefik.http.routers.karine.rule=Host(`karinemascena.adv.br`)"
+      - "traefik.http.routers.karine-http.middlewares=karine-redirect"
+      - "traefik.http.middlewares.karine-redirect.redirectscheme.scheme=https"
+      - "traefik.http.routers.karine.rule=Host(`karinemascena.com.br`) || Host(`www.karinemascena.com.br`) || Host(`karinemascena.adv.br`)"
       - "traefik.http.routers.karine.entrypoints=https"
       - "traefik.http.routers.karine.tls=true"
       - "traefik.http.routers.karine.tls.certresolver=letsencrypt"
