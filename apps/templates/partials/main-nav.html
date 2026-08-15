@@ -1,31 +1,62 @@
 <div class="main-nav">
   <div class="logo-box px-3 py-2">
-    <a href="/" class="logo-dark">
+    <a href="/index" class="logo-dark">
       <span class="logo-lg gps-sidebar-brand-content">
-        <img src="{{ config.ASSETS_ROOT }}/images/logo_kom_dark.png" alt="Karine Mascena" style="height: 38px; width: auto;">
+        <img src="{{ config.ASSETS_ROOT }}/images/logo_kom_dark.png?v=2" alt="Karine Mascena" style="height: 38px; width: auto;">
         <span class="gps-sidebar-brand-name">Karine Mascena<small>Advocacia & Advocacy</small></span>
       </span>
-      <img src="{{ config.ASSETS_ROOT }}/images/logo_kom_dark.png" class="logo-sm gps-sidebar-brand-small" alt="Karine Mascena">
+      <img src="{{ config.ASSETS_ROOT }}/images/logo_kom_dark.png?v=2" class="logo-sm gps-sidebar-brand-small" alt="Karine Mascena">
     </a>
-    <a href="/" class="logo-light">
+    <a href="/index" class="logo-light">
       <span class="logo-lg gps-sidebar-brand-content">
-        <img src="{{ config.ASSETS_ROOT }}/images/logo_kom_white.png" alt="Karine Mascena" style="height: 38px; width: auto;">
+        <img src="{{ config.ASSETS_ROOT }}/images/logo_kom_white.png?v=2" alt="Karine Mascena" style="height: 38px; width: auto;">
         <span class="gps-sidebar-brand-name text-white">Karine Mascena<small>Advocacia & Advocacy</small></span>
       </span>
-      <img src="{{ config.ASSETS_ROOT }}/images/logo_kom_white.png" class="logo-sm gps-sidebar-brand-small" alt="Karine Mascena">
+      <img src="{{ config.ASSETS_ROOT }}/images/logo_kom_white.png?v=2" class="logo-sm gps-sidebar-brand-small" alt="Karine Mascena">
     </a>
   </div>
   <button type="button" class="button-sm-hover" aria-label="Exibir menu"><i class="ri-menu-2-line fs-24 button-sm-hover-icon"></i></button>
   <div class="scrollbar" data-simplebar>
     <ul class="navbar-nav" id="navbar-nav">
-      <li class="menu-title">Navegação</li>
-      <li class="nav-item"><a class="nav-link" href="/"><span class="nav-icon"><i class="ri-home-4-line text-primary"></i></span><span class="nav-text">Início</span></a></li>
-      <li class="nav-item"><a class="nav-link" href="/#sobre"><span class="nav-icon"><i class="ri-user-star-line text-success"></i></span><span class="nav-text">Sobre & Perfil</span></a></li>
-      <li class="nav-item"><a class="nav-link" href="/#atuacao"><span class="nav-icon"><i class="ri-scales-3-line text-warning"></i></span><span class="nav-text">Áreas de Atuação</span></a></li>
-      <li class="nav-item"><a class="nav-link" href="/#terceirosetor"><span class="nav-icon"><i class="ri-building-4-line text-info"></i></span><span class="nav-text">Terceiro Setor & Advocacy</span></a></li>
-      <li class="nav-item"><a class="nav-link" href="/blog"><span class="nav-icon"><i class="ri-article-line text-primary"></i></span><span class="nav-text">Artigos & Blog</span></a></li>
-      <li class="nav-item"><a class="nav-link" href="/gerenciar-carrossel"><span class="nav-icon"><i class="ri-image-edit-line text-warning"></i></span><span class="nav-text">Gerenciar Carrossel</span></a></li>
-      <li class="nav-item"><a class="nav-link" href="/links"><span class="nav-icon"><i class="ri-links-line text-danger"></i></span><span class="nav-text">Links & Redes</span></a></li>
+      <li class="menu-title">Menu Interno</li>
+      <li class="nav-item">
+        <a class="nav-link" href="/index">
+          <span class="nav-icon"><i class="ri-dashboard-3-line text-primary"></i></span>
+          <span class="nav-text">Painel Geral</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/index#processos-tabela">
+          <span class="nav-icon"><i class="ri-scales-3-line text-warning"></i></span>
+          <span class="nav-text">Gestão de Processos</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/blog">
+          <span class="nav-icon"><i class="ri-article-line text-info"></i></span>
+          <span class="nav-text">Artigos & Publicações</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/gerenciar-carrossel">
+          <span class="nav-icon"><i class="ri-image-edit-line text-success"></i></span>
+          <span class="nav-text">Gerenciar Carrossel</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/links">
+          <span class="nav-icon"><i class="ri-links-line text-danger"></i></span>
+          <span class="nav-text">Links & Redes</span>
+        </a>
+      </li>
+
+      <li class="menu-title mt-3">Site Público</li>
+      <li class="nav-item">
+        <a class="nav-link" href="/" target="_blank">
+          <span class="nav-icon"><i class="ri-external-link-line text-secondary"></i></span>
+          <span class="nav-text">Ver Site Oficial</span>
+        </a>
+      </li>
     </ul>
   </div>
 </div>
