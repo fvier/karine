@@ -1,28 +1,26 @@
 services:
   app:
-    container_name: olindaaguiar-app
+    container_name: karine-app
     build:
       context: .
     restart: unless-stopped
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.olindaaguiar-http.rule=Host(`olindaaguiar.com.br`)"
-      - "traefik.http.routers.olindaaguiar-http.entrypoints=http"
-      - "traefik.http.routers.olindaaguiar-http.middlewares=olindaaguiar-https"
-      - "traefik.http.middlewares.olindaaguiar-https.redirectscheme.scheme=https"
-      - "traefik.http.routers.olindaaguiar.rule=Host(`olindaaguiar.com.br`)"
-      - "traefik.http.routers.olindaaguiar.entrypoints=https"
-      - "traefik.http.routers.olindaaguiar.tls=true"
-      - "traefik.http.routers.olindaaguiar.tls.certresolver=letsencrypt"
-      - "traefik.http.services.olindaaguiar.loadbalancer.server.port=5000"
+      - "traefik.http.routers.karine-http.rule=Host(`karinemascena.adv.br`) || Host(`147.79.110.132`)"
+      - "traefik.http.routers.karine-http.entrypoints=http"
+      - "traefik.http.routers.karine.rule=Host(`karinemascena.adv.br`)"
+      - "traefik.http.routers.karine.entrypoints=https"
+      - "traefik.http.routers.karine.tls=true"
+      - "traefik.http.routers.karine.tls.certresolver=letsencrypt"
+      - "traefik.http.services.karine.loadbalancer.server.port=5000"
       - "traefik.docker.network=coolify"
     environment:
       DEBUG: "False"
       FLASK_APP: run.py
       SECRET_KEY: ${SERVICE_HEX_64_RASTREK:?configure SERVICE_HEX_64_RASTREK}
       ASSETS_ROOT: /static
-      DATABASE_URL: postgresql+psycopg2://${POSTGRES_USER:-olinda_aguiar}:${SERVICE_PASSWORD_64_POSTGRES:?configure SERVICE_PASSWORD_64_POSTGRES}@postgres:5432/${POSTGRES_DB:-olinda_aguiar}
-      INITIAL_ADMIN_EMAIL: ${INITIAL_ADMIN_EMAIL:-}
+      DATABASE_URL: postgresql+psycopg2://${POSTGRES_USER:-karine_user}:${SERVICE_PASSWORD_64_POSTGRES:?configure SERVICE_PASSWORD_64_POSTGRES}@postgres:5432/${POSTGRES_DB:-karine_db}
+      INITIAL_ADMIN_EMAIL: ${INITIAL_ADMIN_EMAIL:-karine@karinemascena.adv.br}
       INITIAL_ADMIN_PASSWORD: ${INITIAL_ADMIN_PASSWORD:-}
       API_INTEGRATION_KEY: ${API_INTEGRATION_KEY:?configure API_INTEGRATION_KEY}
     command:
@@ -35,7 +33,7 @@ services:
     expose:
       - "5000"
     ports:
-      - "127.0.0.1:5000:5000"
+      - "127.0.0.1:5001:5000"
     volumes:
       - app_images:/app/apps/static/images
     networks:
@@ -49,12 +47,12 @@ services:
       start_period: 10s
 
   postgres:
-    container_name: olindaaguiar-postgres
+    container_name: karine-postgres
     image: postgres:16-alpine
     restart: unless-stopped
     environment:
-      POSTGRES_DB: ${POSTGRES_DB:-olinda_aguiar}
-      POSTGRES_USER: ${POSTGRES_USER:-olinda_aguiar}
+      POSTGRES_DB: ${POSTGRES_DB:-karine_db}
+      POSTGRES_USER: ${POSTGRES_USER:-karine_user}
       POSTGRES_PASSWORD: ${SERVICE_PASSWORD_64_POSTGRES:?configure SERVICE_PASSWORD_64_POSTGRES}
     volumes:
       - postgres_data:/var/lib/postgresql/data
@@ -68,13 +66,11 @@ services:
 
 volumes:
   postgres_data:
-    name: olindaaguiar_postgres_data
-    external: true
   app_images:
-    name: olindaaguiar_app_images
-    external: true
 
 networks:
   coolify:
     external: true
+    name: coolify
   default:
+    driver: bridge
