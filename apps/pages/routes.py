@@ -61,12 +61,11 @@ DEFAULT_PLANS = [
 ]
 
 DEFAULT_LINKS = [
-    ('WhatsApp Direct', '(81) 9 8447-2771 · Falar no WhatsApp', 'https://wa.me/5581984472771?text=Ol%C3%A1!%20Gostaria%20de%20falar%20com%20Dra.%20Karine%20Mascena.', 'ri-whatsapp-line', '#25d366'),
-    ('LinkedIn', 'in/karinemascena · Conecte-se profissionalmente', 'https://www.linkedin.com/in/karinemascena/', 'ri-linkedin-fill', '#0077b5'),
-    ('Instagram', '@karinemascena · Acompanhe publicações e reflexões', 'https://www.instagram.com/karinemascena/', 'ri-instagram-line', '#e1306c'),
+    ('WhatsApp Direct', '(81) 9 8447-2771', 'https://wa.me/5581984472771?text=Ol%C3%A1!%20Gostaria%20de%20falar%20com%20Dra.%20Karine%20Mascena.', 'ri-whatsapp-line', '#25d366'),
+    ('LinkedIn', 'in/karinemascena', 'https://www.linkedin.com/in/karinemascena/', 'ri-linkedin-fill', '#0077b5'),
+    ('Instagram', '@karinemascena', 'https://www.instagram.com/karinemascena/', 'ri-instagram-line', '#e1306c'),
     ('Site Oficial', 'Advocacia, Terceiro Setor & Advocacy', '/', 'ri-global-line', '#C5A059'),
-    ('Artigos & Perspectivas', 'Artigos sobre Direito Tributário e 3º Setor', '/blog', 'ri-article-line', '#4A2338'),
-    ('Área Restrita (Login)', 'Acesso para Clientes e Organizações', '/auth-signin', 'ri-user-lock-line', '#1e1018'),
+    ('Artigos & Publicações', 'Perspectivas Tributárias & Sociais', '/blog', 'ri-article-line', '#4A2338'),
 ]
 
 PERMISSION_MODULES = [
