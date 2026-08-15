@@ -1525,10 +1525,11 @@ def manage_user(user_id, action):
     return redirect(next_page if next_page in {'/admin-cadastrar', '/admin-privilegios'} else '/admin-cadastrar')
 
 
+@blueprint.route('/gerenciar-carrossel')
 @blueprint.route('/admin-carrossel')
 def manage_carousel_page():
     if not admin_required():
-        return redirect('/index')
+        return redirect('/auth-signin?msg=login_required')
     ensure_carousel_images()
     images = CarouselImage.query.all()
     image_views = [carousel_image_view(image) for image in images]
@@ -1556,10 +1557,11 @@ def manage_carousel_page():
     )
 
 
+@blueprint.route('/gerenciar-carrossel/salvar', methods=['POST'])
 @blueprint.route('/admin/carrossel/save', methods=['POST'])
 def save_carousel():
     if not admin_required():
-        return redirect('/index')
+        return redirect('/auth-signin')
     ensure_carousel_images()
     images = CarouselImage.query.all()
     selected_ids = {int(value) for value in request.form.getlist('active_ids') if value.isdigit()}
@@ -1567,7 +1569,7 @@ def save_carousel():
     selected_ids &= valid_ids
     if not selected_ids:
         flash('Selecione pelo menos uma imagem para o carrossel.', 'warning')
-        return redirect('/admin-carrossel')
+        return redirect('/gerenciar-carrossel')
     for image in images:
         image.active = image.id in selected_ids
         title = request.form.get(f'title_{image.id}', '').strip()
@@ -1589,30 +1591,29 @@ def save_carousel():
         image.sort_order = position * 10
     db.session.commit()
     flash(f'Carrossel atualizado com {len(selected_ids)} imagem(ns) ativa(s).', 'success')
-    return redirect('/admin-carrossel')
+    return redirect('/gerenciar-carrossel')
 
 
+@blueprint.route('/gerenciar-carrossel/upload', methods=['POST'])
 @blueprint.route('/admin/carrossel/upload', methods=['POST'])
 def upload_carousel_image():
     if not admin_required():
-        return redirect('/index')
+        return redirect('/auth-signin')
     photo = request.files.get('carousel_image')
     title = request.form.get('title', '').strip()
-    set_type = request.form.get('set_type', '').strip()
+    set_type = request.form.get('set_type', '').strip() or 'GERAL'
+    set_active = bool(request.form.get('set_active'))
     original_name = secure_filename(photo.filename or '') if photo else ''
     extension = original_name.rsplit('.', 1)[-1].lower() if '.' in original_name else ''
-    if set_type not in CAROUSEL_SET_TYPES:
-        flash('Selecione obrigatoriamente o tipo de conjunto.', 'danger')
-        return redirect('/admin-carrossel')
     if not photo or extension not in {'jpg', 'jpeg', 'png', 'webp'}:
         flash('Selecione uma imagem JPG, PNG ou WEBP válida.', 'danger')
-        return redirect('/admin-carrossel')
+        return redirect('/gerenciar-carrossel')
     photo.stream.seek(0, os.SEEK_END)
     file_size = photo.stream.tell()
     photo.stream.seek(0)
     if file_size > 8 * 1024 * 1024:
         flash('A imagem deve possuir no máximo 8 MB.', 'danger')
-        return redirect('/admin-carrossel')
+        return redirect('/gerenciar-carrossel')
     signature = photo.stream.read(12)
     photo.stream.seek(0)
     valid_signature = (
@@ -1622,8 +1623,8 @@ def upload_carousel_image():
     )
     if not valid_signature:
         flash('O arquivo enviado não possui um formato de imagem válido.', 'danger')
-        return redirect('/admin-carrossel')
-    filename = f'hero-upload-{uuid4().hex}.{extension}'
+        return redirect('/gerenciar-carrossel')
+    filename = f'karine-{uuid4().hex[:8]}.{extension}'
     upload_dir = os.path.join(current_app.static_folder, 'images')
     photo.save(os.path.join(upload_dir, filename))
     next_order = (db.session.query(db.func.max(CarouselImage.sort_order)).scalar() or 0) + 10
@@ -1631,34 +1632,30 @@ def upload_carousel_image():
         filename=filename,
         title=(title or carousel_title_from_filename(original_name))[:120],
         set_type=set_type,
-        active=False,
+        active=set_active,
         sort_order=next_order,
     ))
     db.session.commit()
-    flash('Imagem adicionada à galeria. Ative-a quando desejar exibi-la.', 'success')
-    return redirect('/admin-carrossel')
+    flash('Imagem adicionada com sucesso ao carrossel.', 'success')
+    return redirect('/gerenciar-carrossel')
 
 
-@blueprint.route('/admin/carrossel/<int:image_id>/delete', methods=['POST'])
+@blueprint.route('/gerenciar-carrossel/deletar/<int:image_id>', methods=['GET', 'POST'])
+@blueprint.route('/admin/carrossel/<int:image_id>/delete', methods=['GET', 'POST'])
 def delete_carousel_image(image_id):
     if not admin_required():
-        return redirect('/index')
+        return redirect('/auth-signin')
     image = db.session.get(CarouselImage, image_id)
     if not image:
         flash('A imagem selecionada não foi encontrada.', 'danger')
-        return redirect('/admin-carrossel')
+        return redirect('/gerenciar-carrossel')
     if image.active and CarouselImage.query.filter_by(active=True).count() <= 1:
-        flash('Não é possível excluir a última imagem ativa do carrossel.', 'warning')
-        return redirect('/admin-carrossel')
-    filename = os.path.basename(image.filename)
-    image_path = os.path.join(current_app.static_folder, 'images', filename)
-    title = image.title
+        flash('Não é possível excluir a única imagem ativa do carrossel.', 'warning')
+        return redirect('/gerenciar-carrossel')
     db.session.delete(image)
     db.session.commit()
-    if os.path.isfile(image_path):
-        os.remove(image_path)
-    flash(f'Imagem “{title}” excluída permanentemente da galeria.', 'success')
-    return redirect('/admin-carrossel')
+    flash('Imagem excluída do carrossel com sucesso.', 'success')
+    return redirect('/gerenciar-carrossel')
 
 
 @blueprint.route('/<template>')
