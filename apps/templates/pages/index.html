@@ -1,100 +1,229 @@
 {% extends 'layouts/vertical.html' %}
 
-{% block title %}Painel Profissional | Karine Mascena{% endblock title %}
+{% block title %}Painel de Gestão Jurídica & Advocacy | Karine Mascena{% endblock title %}
 
 {% block page_content %}
 <div class="py-4">
+    <!-- BANNER BOAS-VINDAS / IDENTIDADE DA ADVOGADA -->
     <div class="card border-0 shadow-sm rounded-4 p-4 p-md-5 bg-white text-dark mb-4 border-start border-4" style="border-left-color: #4A2338 !important;">
         <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-4">
             <div class="d-flex align-items-center gap-3">
-                <img src="{{ config.ASSETS_ROOT }}/images/logo_kom_gold.png" alt="Karine Mascena" style="height: 64px; width: auto; background: #4A2338; padding: 8px; border-radius: 50%;">
+                <img src="{{ config.ASSETS_ROOT }}/images/logo_kom_gold.png" alt="Karine Mascena" style="height: 68px; width: auto; background: #4A2338; padding: 10px; border-radius: 50%; box-shadow: 0 4px 12px rgba(74,35,56,0.25);">
                 <div>
-                    <span class="badge px-3 py-1 rounded-pill fw-bold text-uppercase fs-11" style="background:#fbf5e8; color: #C5A059;">Painel Profissional</span>
+                    <div class="d-flex align-items-center gap-2 mb-1">
+                        <span class="badge px-3 py-1 rounded-pill fw-bold text-uppercase fs-11" style="background:#fbf5e8; color: #C5A059;">Área Restrita do Cliente & Gestão</span>
+                        <span class="badge bg-success bg-opacity-10 text-success border border-success border-opacity-25 px-2.5 py-0.5 rounded-pill fs-11"><i class="ri-checkbox-circle-fill me-1"></i>Sistema Operacional</span>
+                    </div>
                     <h2 class="fw-bold mb-1" style="color: #4A2338; font-family: serif;">Karine Mascena</h2>
-                    <p class="text-secondary mb-0">Advogada · Tributário & Advocacy no Terceiro Setor · Direitos Humanos</p>
+                    <p class="text-secondary mb-0 fs-14">Advocacia Multidisciplinar · Direito Tributário, Advocacy no Terceiro Setor & Direitos Humanos</p>
                 </div>
             </div>
             <div class="d-flex flex-wrap gap-2">
-                <a href="/" class="btn btn-outline-dark rounded-pill px-4 fw-semibold"><i class="ri-global-line me-1"></i> Ver Landing Page</a>
-                <a href="/links" class="btn btn-primary rounded-pill px-4 fw-semibold" style="background-color: #4A2338; border-color: #4A2338;"><i class="ri-links-line me-1"></i> Abrir Linktree</a>
+                <a href="/" class="btn btn-outline-dark rounded-pill px-3.5 py-2 fw-semibold fs-14"><i class="ri-global-line me-1 text-primary"></i> Site Oficial</a>
+                <a href="/links" class="btn btn-outline-secondary rounded-pill px-3.5 py-2 fw-semibold fs-14"><i class="ri-links-line me-1 text-warning"></i> Biolink / Redes</a>
+                <a href="/blog" class="btn rounded-pill px-3.5 py-2 fw-semibold text-white fs-14" style="background-color: #4A2338;"><i class="ri-article-line me-1 text-warning"></i> Gerenciar Artigos</a>
             </div>
         </div>
     </div>
 
-    <!-- CARDS DE ATUAÇÃO E ATALHOS -->
+    <!-- METRICAS / WIDGETS RESUMO -->
+    <div class="row g-3 mb-4">
+        <div class="col-6 col-md-3">
+            <div class="card border-0 shadow-sm rounded-4 p-3 bg-white h-100">
+                <div class="d-flex align-items-center justify-content-between mb-2">
+                    <span class="fs-22 text-primary"><i class="ri-folder-shield-line"></i></span>
+                    <span class="badge bg-primary bg-opacity-10 text-primary fw-bold">Em dia</span>
+                </div>
+                <h3 class="fw-bold text-dark mb-0">12</h3>
+                <small class="text-muted fw-semibold fs-12">Processos & Demandas Ativas</small>
+            </div>
+        </div>
+        <div class="col-6 col-md-3">
+            <div class="card border-0 shadow-sm rounded-4 p-3 bg-white h-100">
+                <div class="d-flex align-items-center justify-content-between mb-2">
+                    <span class="fs-22 text-warning"><i class="ri-community-line"></i></span>
+                    <span class="badge bg-warning bg-opacity-10 text-warning fw-bold">Ativas</span>
+                </div>
+                <h3 class="fw-bold text-dark mb-0">8</h3>
+                <small class="text-muted fw-semibold fs-12">Organizações Atendidas (OSCs)</small>
+            </div>
+        </div>
+        <div class="col-6 col-md-3">
+            <div class="card border-0 shadow-sm rounded-4 p-3 bg-white h-100">
+                <div class="d-flex align-items-center justify-content-between mb-2">
+                    <span class="fs-22 text-success"><i class="ri-file-search-line"></i></span>
+                    <span class="badge bg-success bg-opacity-10 text-success fw-bold">Entregues</span>
+                </div>
+                <h3 class="fw-bold text-dark mb-0">15</h3>
+                <small class="text-muted fw-semibold fs-12">Pareceres Tributários Emitidos</small>
+            </div>
+        </div>
+        <div class="col-6 col-md-3">
+            <div class="card border-0 shadow-sm rounded-4 p-3 bg-white h-100">
+                <div class="d-flex align-items-center justify-content-between mb-2">
+                    <span class="fs-22 text-info"><i class="ri-megaphone-line"></i></span>
+                    <span class="badge bg-info bg-opacity-10 text-info fw-bold">Publicados</span>
+                </div>
+                <h3 class="fw-bold text-dark mb-0">6</h3>
+                <small class="text-muted fw-semibold fs-12">Artigos & Manifestos de Advocacy</small>
+            </div>
+        </div>
+    </div>
+
+    <!-- TABELA DE GESTÃO DE PROCESSOS E DEMANDAS -->
+    <div class="card border-0 shadow-sm rounded-4 mb-4 overflow-hidden bg-white">
+        <div class="card-header bg-white py-3 px-4 d-flex align-items-center justify-content-between border-bottom">
+            <div>
+                <h5 class="fw-bold text-dark mb-0" style="font-family: serif;">
+                    <i class="ri-scales-3-line text-warning me-2"></i>Gestão de Processos & Consultas Tributárias
+                </h5>
+                <small class="text-muted">Acompanhamento contínuo de imunidades, relatórios de riscos e articulações institucionais</small>
+            </div>
+            <button class="btn btn-sm btn-outline-dark rounded-pill px-3 fs-13">
+                <i class="ri-add-line me-1"></i> Nova Demanda
+            </button>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0 fs-14">
+                <thead class="table-light text-uppercase fs-11 text-muted fw-bold">
+                    <tr>
+                        <th class="ps-4">Código / Cliente (OSC)</th>
+                        <th>Área / Frente</th>
+                        <th>Objeto da Demanda / Parecer</th>
+                        <th>Status do Caso</th>
+                        <th>Próximo Passo / Ação</th>
+                        <th class="text-end pe-4">Relatório</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="ps-4">
+                            <strong class="d-block text-dark">PROC-2026/041</strong>
+                            <small class="text-muted">Associação Cultural e Social PE</small>
+                        </td>
+                        <td><span class="badge bg-danger bg-opacity-10 text-danger border border-danger border-opacity-25 rounded-pill px-2.5">Tributário</span></td>
+                        <td>Recurso de Imunidade ITCMD / Impostos sobre consumo na Reforma Tributária</td>
+                        <td><span class="badge bg-warning text-dark rounded-pill px-2.5 py-1">Em Análise no TJPE</span></td>
+                        <td><small class="text-dark fw-semibold">Audiência Virtual agendada (22/08)</small></td>
+                        <td class="text-end pe-4">
+                            <a href="#" class="btn btn-sm btn-light border rounded-pill" title="Baixar Parecer Técnico"><i class="ri-file-pdf-2-line text-danger"></i> PDF</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="ps-4">
+                            <strong class="d-block text-dark">PROC-2026/038</strong>
+                            <small class="text-muted">Instituto Direitos Humanos e Cidadania</small>
+                        </td>
+                        <td><span class="badge bg-warning bg-opacity-10 text-dark border border-warning border-opacity-50 rounded-pill px-2.5">3º Setor / IBS</span></td>
+                        <td>Parecer Regulatório dos Impactos da CBS/IBS nas receitas institucionais</td>
+                        <td><span class="badge bg-success text-white rounded-pill px-2.5 py-1">Concluído & Entregue</span></td>
+                        <td><small class="text-muted">Apresentação para a Diretoria Executiva</small></td>
+                        <td class="text-end pe-4">
+                            <a href="#" class="btn btn-sm btn-light border rounded-pill" title="Baixar Parecer Técnico"><i class="ri-file-pdf-2-line text-danger"></i> PDF</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="ps-4">
+                            <strong class="d-block text-dark">PROC-2026/029</strong>
+                            <small class="text-muted">Fundação Sustentabilidade Social Nordeste</small>
+                        </td>
+                        <td><span class="badge bg-info bg-opacity-10 text-info border border-info border-opacity-25 rounded-pill px-2.5">Compliance MROSC</span></td>
+                        <td>Revisão Estatutária e Governança de Acordos de Fomento (Lei 13.019/14)</td>
+                        <td><span class="badge bg-primary text-white rounded-pill px-2.5 py-1">Em Emissão</span></td>
+                        <td><small class="text-dark fw-semibold">Validação em Assembleia Geral</small></td>
+                        <td class="text-end pe-4">
+                            <a href="#" class="btn btn-sm btn-light border rounded-pill" title="Baixar Minuta"><i class="ri-file-word-2-line text-primary"></i> DOCX</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="ps-4">
+                            <strong class="d-block text-dark">PROC-2026/015</strong>
+                            <small class="text-muted">Rede Pernambucana de OSCs</small>
+                        </td>
+                        <td><span class="badge bg-secondary bg-opacity-10 text-dark border rounded-pill px-2.5">Advocacy & RelGov</span></td>
+                        <td>Articulação Institucional e Defesa de Pautas de Incentivo Fiscal Social</td>
+                        <td><span class="badge bg-info text-white rounded-pill px-2.5 py-1">Em Tramitação</span></td>
+                        <td><small class="text-dark fw-semibold">Reunião com Comissão Executiva</small></td>
+                        <td class="text-end pe-4">
+                            <a href="#" class="btn btn-sm btn-light border rounded-pill" title="Baixar Dossiê"><i class="ri-file-pdf-2-line text-danger"></i> PDF</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- DUAS COLUNAS: PUBLICADA NO BLOG & RECURSOS RÁPIDOS -->
     <div class="row g-4 mb-4">
-        <div class="col-md-6 col-lg-3">
+        <!-- Coluna 1: Publicações & Artigos -->
+        <div class="col-lg-7">
             <div class="card border-0 shadow-sm rounded-4 p-4 bg-white h-100">
                 <div class="d-flex align-items-center justify-content-between mb-3">
-                    <span class="fs-24 text-primary"><i class="ri-bank-card-line"></i></span>
-                    <span class="badge bg-light text-dark">Especialidade</span>
+                    <h5 class="fw-bold text-dark mb-0"><i class="ri-article-line text-primary me-2"></i>Artigos & Publicações de Advocacy</h5>
+                    <a href="/blog" class="text-primary fw-semibold small text-decoration-none">Ver todos <i class="ri-arrow-right-line"></i></a>
                 </div>
-                <h5 class="fw-bold text-dark mb-1">Direito Tributário</h5>
-                <p class="text-muted fs-13 mb-0">Planejamento fiscal e imunidades tributárias para o Terceiro Setor.</p>
-            </div>
-        </div>
-        <div class="col-md-6 col-lg-3">
-            <div class="card border-0 shadow-sm rounded-4 p-4 bg-white h-100">
-                <div class="d-flex align-items-center justify-content-between mb-3">
-                    <span class="fs-24 text-warning"><i class="ri-building-4-line"></i></span>
-                    <span class="badge bg-light text-dark">Estatutos & OSCs</span>
-                </div>
-                <h5 class="fw-bold text-dark mb-1">Advocacy & 3º Setor</h5>
-                <p class="text-muted fs-13 mb-0">Fortalecimento e conformidade regulatória para entidades sem fins lucrativos.</p>
-            </div>
-        </div>
-        <div class="col-md-6 col-lg-3">
-            <div class="card border-0 shadow-sm rounded-4 p-4 bg-white h-100">
-                <div class="d-flex align-items-center justify-content-between mb-3">
-                    <span class="fs-24 text-info"><i class="ri-government-line"></i></span>
-                    <span class="badge bg-light text-dark">RelGov</span>
-                </div>
-                <h5 class="fw-bold text-dark mb-1">Relações Institucionais</h5>
-                <p class="text-muted fs-13 mb-0">Articulação ética junto aos Poderes Executivo e Legislativo.</p>
-            </div>
-        </div>
-        <div class="col-md-6 col-lg-3">
-            <div class="card border-0 shadow-sm rounded-4 p-4 bg-white h-100">
-                <div class="d-flex align-items-center justify-content-between mb-3">
-                    <span class="fs-24 text-danger"><i class="ri-heart-hand-line"></i></span>
-                    <span class="badge bg-light text-dark">Garantias</span>
-                </div>
-                <h5 class="fw-bold text-dark mb-1">Direitos Humanos</h5>
-                <p class="text-muted fs-13 mb-0">Defesa de garantias fundamentais e cidadania social.</p>
-            </div>
-        </div>
-    </div>
 
-    <!-- CANAIS DE CONTATO -->
-    <div class="card border-0 shadow-sm rounded-4 p-4 bg-white">
-        <h5 class="fw-bold text-dark mb-3"><i class="ri-contacts-book-2-line text-primary me-2"></i>Canais Oficiais de Contato</h5>
-        <div class="row g-3">
-            <div class="col-md-4">
-                <a href="https://wa.me/5581984472771" target="_blank" rel="noopener noreferrer" class="d-flex align-items-center gap-3 p-3 rounded-3 border border-light-subtle text-decoration-none text-dark hover-lift">
-                    <i class="ri-whatsapp-line fs-28 text-success"></i>
-                    <div>
-                        <strong class="d-block">WhatsApp Direct</strong>
-                        <small class="text-muted">(81) 9 8447-2771</small>
+                <div class="d-grid gap-3">
+                    <div class="p-3 rounded-3 border border-light-subtle bg-light d-flex align-items-center justify-content-between gap-3">
+                        <div>
+                            <span class="badge bg-warning text-dark fs-10 px-2 py-0.5 rounded-pill uppercase mb-1">Reforma Tributária</span>
+                            <h6 class="fw-bold text-dark mb-1">Os Impactos da Reforma Tributária nas Organizações da Sociedade Civil (OSCs)</h6>
+                            <small class="text-muted">Publicado em 10/08/2026 · Leitura de 6 min</small>
+                        </div>
+                        <a href="/blog" class="btn btn-sm btn-outline-dark rounded-circle p-0 d-flex align-items-center justify-content-center" style="width:34px;height:34px"><i class="ri-arrow-right-up-line"></i></a>
                     </div>
-                </a>
+
+                    <div class="p-3 rounded-3 border border-light-subtle bg-light d-flex align-items-center justify-content-between gap-3">
+                        <div>
+                            <span class="badge bg-primary text-white fs-10 px-2 py-0.5 rounded-pill uppercase mb-1">Advocacy & Direitos</span>
+                            <h6 class="fw-bold text-dark mb-1">Advocacy e Terceiro Setor: Como Articular Pautas Sociais com Segurança Jurídica</h6>
+                            <small class="text-muted">Publicado em 02/08/2026 · Leitura de 4 min</small>
+                        </div>
+                        <a href="/blog" class="btn btn-sm btn-outline-dark rounded-circle p-0 d-flex align-items-center justify-content-center" style="width:34px;height:34px"><i class="ri-arrow-right-up-line"></i></a>
+                    </div>
+                </div>
             </div>
-            <div class="col-md-4">
-                <a href="https://www.linkedin.com/in/karinemascena/" target="_blank" rel="noopener noreferrer" class="d-flex align-items-center gap-3 p-3 rounded-3 border border-light-subtle text-decoration-none text-dark hover-lift">
-                    <i class="ri-linkedin-fill fs-28 text-primary"></i>
-                    <div>
-                        <strong class="d-block">LinkedIn</strong>
-                        <small class="text-muted">in/karinemascena</small>
-                    </div>
-                </a>
-            </div>
-            <div class="col-md-4">
-                <a href="https://www.instagram.com/karinemascena/" target="_blank" rel="noopener noreferrer" class="d-flex align-items-center gap-3 p-3 rounded-3 border border-light-subtle text-decoration-none text-dark hover-lift">
-                    <i class="ri-instagram-line fs-28 text-danger"></i>
-                    <div>
-                        <strong class="d-block">Instagram</strong>
-                        <small class="text-muted">@karinemascena</small>
-                    </div>
-                </a>
+        </div>
+
+        <!-- Coluna 2: Modelos & Ferramentas Úteis -->
+        <div class="col-lg-5">
+            <div class="card border-0 shadow-sm rounded-4 p-4 bg-white h-100">
+                <h5 class="fw-bold text-dark mb-3"><i class="ri-tools-line text-warning me-2"></i>Ferramentas Rápidas & Modelos</h5>
+
+                <div class="d-grid gap-2">
+                    <a href="#" class="btn btn-light text-start p-3 border rounded-3 d-flex align-items-center justify-content-between">
+                        <div class="d-flex align-items-center gap-2">
+                            <i class="ri-file-text-line fs-20 text-danger"></i>
+                            <div>
+                                <strong class="d-block text-dark fs-14">Checklist de Imunidade Tributária</strong>
+                                <small class="text-muted">Verificação de requisitos para entidades</small>
+                            </div>
+                        </div>
+                        <i class="ri-download-2-line text-muted"></i>
+                    </a>
+
+                    <a href="#" class="btn btn-light text-start p-3 border rounded-3 d-flex align-items-center justify-content-between">
+                        <div class="d-flex align-items-center gap-2">
+                            <i class="ri-shield-check-line fs-20 text-success"></i>
+                            <div>
+                                <strong class="d-block text-dark fs-14">Guia MROSC & Governança</strong>
+                                <small class="text-muted">Adequação de parcerias com setor público</small>
+                            </div>
+                        </div>
+                        <i class="ri-download-2-line text-muted"></i>
+                    </a>
+
+                    <a href="https://wa.me/5581984472771" target="_blank" rel="noopener noreferrer" class="btn btn-success text-white p-3 border-0 rounded-3 d-flex align-items-center justify-content-between mt-2" style="background-color: #25d366;">
+                        <div class="d-flex align-items-center gap-2">
+                            <i class="ri-whatsapp-line fs-20"></i>
+                            <div>
+                                <strong class="d-block fs-14">Atendimento WhatsApp Direct</strong>
+                                <small class="text-white opacity-85">(81) 9 8447-2771</small>
+                            </div>
+                        </div>
+                        <i class="ri-arrow-right-line"></i>
+                    </a>
+                </div>
             </div>
         </div>
     </div>
