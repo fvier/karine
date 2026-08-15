@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 280" width="100%" height="100%">
+  <style>
+    .stroke-white {
+      stroke: #FFFFFF;
+      stroke-width: 4.5;
+      stroke-linecap: square;
+      stroke-linejoin: miter;
+      fill: none;
+    }
+  </style>
+  <!-- K -->
+  <line x1="80" y1="40" x2="80" y2="240" class="stroke-white" />
+  <line x1="180" y1="40" x2="80" y2="155" class="stroke-white" />
+  <line x1="180" y1="240" x2="80" y2="135" class="stroke-white" />
+
+  <!-- O -->
+  <circle cx="230" cy="140" r="100" class="stroke-white" />
+
+  <!-- M -->
+  <line x1="300" y1="40" x2="300" y2="240" class="stroke-white" />
+  <line x1="300" y1="40" x2="370" y2="240" class="stroke-white" />
+  <line x1="370" y1="240" x2="440" y2="40" class="stroke-white" />
+  <line x1="440" y1="40" x2="440" y2="240" class="stroke-white" />
+</svg>

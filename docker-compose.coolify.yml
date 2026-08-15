@@ -1,0 +1,80 @@
+services:
+  app:
+    container_name: olindaaguiar-app
+    build:
+      context: .
+    restart: unless-stopped
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.olindaaguiar-http.rule=Host(`olindaaguiar.com.br`)"
+      - "traefik.http.routers.olindaaguiar-http.entrypoints=http"
+      - "traefik.http.routers.olindaaguiar-http.middlewares=olindaaguiar-https"
+      - "traefik.http.middlewares.olindaaguiar-https.redirectscheme.scheme=https"
+      - "traefik.http.routers.olindaaguiar.rule=Host(`olindaaguiar.com.br`)"
+      - "traefik.http.routers.olindaaguiar.entrypoints=https"
+      - "traefik.http.routers.olindaaguiar.tls=true"
+      - "traefik.http.routers.olindaaguiar.tls.certresolver=letsencrypt"
+      - "traefik.http.services.olindaaguiar.loadbalancer.server.port=5000"
+      - "traefik.docker.network=coolify"
+    environment:
+      DEBUG: "False"
+      FLASK_APP: run.py
+      SECRET_KEY: ${SERVICE_HEX_64_RASTREK:?configure SERVICE_HEX_64_RASTREK}
+      ASSETS_ROOT: /static
+      DATABASE_URL: postgresql+psycopg2://${POSTGRES_USER:-olinda_aguiar}:${SERVICE_PASSWORD_64_POSTGRES:?configure SERVICE_PASSWORD_64_POSTGRES}@postgres:5432/${POSTGRES_DB:-olinda_aguiar}
+      INITIAL_ADMIN_EMAIL: ${INITIAL_ADMIN_EMAIL:-}
+      INITIAL_ADMIN_PASSWORD: ${INITIAL_ADMIN_PASSWORD:-}
+      API_INTEGRATION_KEY: ${API_INTEGRATION_KEY:?configure API_INTEGRATION_KEY}
+    command:
+      - /bin/sh
+      - -c
+      - flask db upgrade && exec gunicorn --bind 0.0.0.0:5000 --workers 2 --access-logfile - --error-logfile - --timeout 60 run:app
+    depends_on:
+      postgres:
+        condition: service_healthy
+    expose:
+      - "5000"
+    ports:
+      - "127.0.0.1:5000:5000"
+    volumes:
+      - app_images:/app/apps/static/images
+    networks:
+      - coolify
+      - default
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:5000/health', timeout=3)"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+
+  postgres:
+    container_name: olindaaguiar-postgres
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-olinda_aguiar}
+      POSTGRES_USER: ${POSTGRES_USER:-olinda_aguiar}
+      POSTGRES_PASSWORD: ${SERVICE_PASSWORD_64_POSTGRES:?configure SERVICE_PASSWORD_64_POSTGRES}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - default
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  postgres_data:
+    name: olindaaguiar_postgres_data
+    external: true
+  app_images:
+    name: olindaaguiar_app_images
+    external: true
+
+networks:
+  coolify:
+    external: true
+  default:

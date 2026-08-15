@@ -1,0 +1,102 @@
+{% extends 'layouts/vertical.html' %}
+
+{% block title %}Painel Profissional | Karine Mascena{% endblock title %}
+
+{% block page_content %}
+<div class="py-4">
+    <div class="card border-0 shadow-sm rounded-4 p-4 p-md-5 bg-white text-dark mb-4 border-start border-4" style="border-left-color: #4A2338 !important;">
+        <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-4">
+            <div class="d-flex align-items-center gap-3">
+                <img src="{{ config.ASSETS_ROOT }}/images/logo_kom_gold.png" alt="Karine Mascena" style="height: 64px; width: auto; background: #4A2338; padding: 8px; border-radius: 50%;">
+                <div>
+                    <span class="badge px-3 py-1 rounded-pill fw-bold text-uppercase fs-11" style="background:#fbf5e8; color: #C5A059;">Painel Profissional</span>
+                    <h2 class="fw-bold mb-1" style="color: #4A2338; font-family: serif;">Karine Mascena</h2>
+                    <p class="text-secondary mb-0">Advogada · Tributário & Advocacy no Terceiro Setor · Direitos Humanos</p>
+                </div>
+            </div>
+            <div class="d-flex flex-wrap gap-2">
+                <a href="/" class="btn btn-outline-dark rounded-pill px-4 fw-semibold"><i class="ri-global-line me-1"></i> Ver Landing Page</a>
+                <a href="/links" class="btn btn-primary rounded-pill px-4 fw-semibold" style="background-color: #4A2338; border-color: #4A2338;"><i class="ri-links-line me-1"></i> Abrir Linktree</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- CARDS DE ATUAÇÃO E ATALHOS -->
+    <div class="row g-4 mb-4">
+        <div class="col-md-6 col-lg-3">
+            <div class="card border-0 shadow-sm rounded-4 p-4 bg-white h-100">
+                <div class="d-flex align-items-center justify-content-between mb-3">
+                    <span class="fs-24 text-primary"><i class="ri-bank-card-line"></i></span>
+                    <span class="badge bg-light text-dark">Especialidade</span>
+                </div>
+                <h5 class="fw-bold text-dark mb-1">Direito Tributário</h5>
+                <p class="text-muted fs-13 mb-0">Planejamento fiscal e imunidades tributárias para o Terceiro Setor.</p>
+            </div>
+        </div>
+        <div class="col-md-6 col-lg-3">
+            <div class="card border-0 shadow-sm rounded-4 p-4 bg-white h-100">
+                <div class="d-flex align-items-center justify-content-between mb-3">
+                    <span class="fs-24 text-warning"><i class="ri-building-4-line"></i></span>
+                    <span class="badge bg-light text-dark">Estatutos & OSCs</span>
+                </div>
+                <h5 class="fw-bold text-dark mb-1">Advocacy & 3º Setor</h5>
+                <p class="text-muted fs-13 mb-0">Fortalecimento e conformidade regulatória para entidades sem fins lucrativos.</p>
+            </div>
+        </div>
+        <div class="col-md-6 col-lg-3">
+            <div class="card border-0 shadow-sm rounded-4 p-4 bg-white h-100">
+                <div class="d-flex align-items-center justify-content-between mb-3">
+                    <span class="fs-24 text-info"><i class="ri-government-line"></i></span>
+                    <span class="badge bg-light text-dark">RelGov</span>
+                </div>
+                <h5 class="fw-bold text-dark mb-1">Relações Institucionais</h5>
+                <p class="text-muted fs-13 mb-0">Articulação ética junto aos Poderes Executivo e Legislativo.</p>
+            </div>
+        </div>
+        <div class="col-md-6 col-lg-3">
+            <div class="card border-0 shadow-sm rounded-4 p-4 bg-white h-100">
+                <div class="d-flex align-items-center justify-content-between mb-3">
+                    <span class="fs-24 text-danger"><i class="ri-heart-hand-line"></i></span>
+                    <span class="badge bg-light text-dark">Garantias</span>
+                </div>
+                <h5 class="fw-bold text-dark mb-1">Direitos Humanos</h5>
+                <p class="text-muted fs-13 mb-0">Defesa de garantias fundamentais e cidadania social.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- CANAIS DE CONTATO -->
+    <div class="card border-0 shadow-sm rounded-4 p-4 bg-white">
+        <h5 class="fw-bold text-dark mb-3"><i class="ri-contacts-book-2-line text-primary me-2"></i>Canais Oficiais de Contato</h5>
+        <div class="row g-3">
+            <div class="col-md-4">
+                <a href="https://wa.me/5581984472771" target="_blank" rel="noopener noreferrer" class="d-flex align-items-center gap-3 p-3 rounded-3 border border-light-subtle text-decoration-none text-dark hover-lift">
+                    <i class="ri-whatsapp-line fs-28 text-success"></i>
+                    <div>
+                        <strong class="d-block">WhatsApp Direct</strong>
+                        <small class="text-muted">(81) 9 8447-2771</small>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-4">
+                <a href="https://www.linkedin.com/in/karinemascena/" target="_blank" rel="noopener noreferrer" class="d-flex align-items-center gap-3 p-3 rounded-3 border border-light-subtle text-decoration-none text-dark hover-lift">
+                    <i class="ri-linkedin-fill fs-28 text-primary"></i>
+                    <div>
+                        <strong class="d-block">LinkedIn</strong>
+                        <small class="text-muted">in/karinemascena</small>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-4">
+                <a href="https://www.instagram.com/karinemascena/" target="_blank" rel="noopener noreferrer" class="d-flex align-items-center gap-3 p-3 rounded-3 border border-light-subtle text-decoration-none text-dark hover-lift">
+                    <i class="ri-instagram-line fs-28 text-danger"></i>
+                    <div>
+                        <strong class="d-block">Instagram</strong>
+                        <small class="text-muted">@karinemascena</small>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock page_content %}

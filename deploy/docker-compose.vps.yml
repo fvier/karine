@@ -1,0 +1,29 @@
+services:
+  app:
+    environment:
+      DATABASE_URL: postgresql+psycopg2://${POSTGRES_USER:-olinda_aguiar}:${SERVICE_PASSWORD_64_POSTGRES}@olindaaguiar-db:5432/${POSTGRES_DB:-olinda_aguiar}
+    networks:
+      - default
+      - coolify
+    labels:
+      - traefik.enable=true
+      - traefik.http.middlewares.olindaaguiar-https.redirectscheme.scheme=https
+      - traefik.http.routers.olindaaguiar-http.entrypoints=http
+      - traefik.http.routers.olindaaguiar-http.rule=Host(`olindaaguiar.com.br`)
+      - traefik.http.routers.olindaaguiar-http.middlewares=olindaaguiar-https
+      - traefik.http.routers.olindaaguiar.entrypoints=https
+      - traefik.http.routers.olindaaguiar.rule=Host(`olindaaguiar.com.br`)
+      - traefik.http.routers.olindaaguiar.tls=true
+      - traefik.http.routers.olindaaguiar.tls.certresolver=letsencrypt
+      - traefik.http.services.olindaaguiar.loadbalancer.server.port=5000
+
+  postgres:
+    networks:
+      default:
+        aliases:
+          - olindaaguiar-db
+
+networks:
+  coolify:
+    external: true
+    name: coolify

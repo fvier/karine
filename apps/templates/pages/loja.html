@@ -1,0 +1,142 @@
+{% extends "layouts/base.html" %}
+
+{% block title %}Loja de Artes & Móveis em Madeira de Demolição | Olinda Aguiar{% endblock title %}
+
+{% block content %}
+<style>
+    .store-header-bg {
+        background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+        color: #fff;
+    }
+    .product-card {
+        border-radius: 20px;
+        border: 1px solid #e2e8f0;
+        box-shadow: 0 10px 30px rgba(15, 23, 42, 0.06);
+        transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.25s ease;
+        background: #ffffff;
+    }
+    .product-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 18px 40px rgba(15, 23, 42, 0.14);
+        border-color: #d97706;
+    }
+    .product-img-box {
+        height: 220px;
+        background: #fdfbf7;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        border-radius: 20px 20px 0 0;
+        overflow: hidden;
+        border-bottom: 1px solid #f1f5f9;
+    }
+    .product-img {
+        max-height: 180px;
+        max-width: 100%;
+        object-fit: contain;
+        filter: drop-shadow(0 6px 12px rgba(0,0,0,0.15));
+        transition: transform 0.3s ease;
+    }
+    .product-card:hover .product-img {
+        transform: scale(1.05);
+    }
+    .price-tag {
+        font-size: 1.4rem;
+        font-weight: 800;
+        color: #d97706;
+    }
+</style>
+
+<!-- Header Loja -->
+<div class="store-header-bg py-5">
+    <div class="container py-3">
+        <div class="row align-items-center justify-content-between">
+            <div class="col-lg-8">
+                <a href="/" class="btn btn-outline-light rounded-pill px-3 py-1 mb-3 small d-inline-flex align-items-center gap-1">
+                    <i class="ri-arrow-left-line"></i> Voltar ao Atelier
+                </a>
+                <span class="badge bg-warning text-dark px-3 py-1.5 rounded-pill fw-bold text-uppercase d-block mb-2 style-badge" style="width: fit-content;">Catálogo de Peças Únicas</span>
+                <h1 class="display-5 fw-extrabold text-white mb-2">Loja Olinda Aguiar</h1>
+                <p class="lead text-light opacity-87 mb-0" style="max-width: 650px;">
+                    Móveis rústicos, esculturas, quadros entalhados e peças exclusivas em madeira de demolição garimpadas de casarios históricos.
+                </p>
+            </div>
+            <div class="col-lg-4 text-lg-end mt-4 mt-lg-0">
+                <img src="{{ url_for('static', filename='images/logo_icon.png') }}" alt="Emblema Olinda Aguiar" style="max-height: 95px; filter: drop-shadow(0 4px 12px rgba(0,0,0,0.5));">
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Filtros e Catálogo de Produtos -->
+<div class="container py-5">
+    
+    <!-- Barra de Filtros -->
+    <div class="d-flex flex-wrap align-items-center justify-content-between gap-3 mb-4 pb-3 border-bottom">
+        <div class="d-flex flex-wrap gap-2">
+            <button class="btn btn-warning rounded-pill px-4 fw-bold text-dark btn-sm shadow-xs">Todas as Peças</button>
+            <button class="btn btn-outline-secondary rounded-pill px-3 fw-semibold btn-sm">Móveis Rústicos</button>
+            <button class="btn btn-outline-secondary rounded-pill px-3 fw-semibold btn-sm">Esculturas & Quadros</button>
+            <button class="btn btn-outline-secondary rounded-pill px-3 fw-semibold btn-sm">Painéis & Molduras</button>
+        </div>
+        <span class="text-muted small">Exibindo <strong>{{ products|length }} peças exclusivas</strong></span>
+    </div>
+
+    <!-- Grid de Produtos -->
+    <div class="row g-4">
+        {% for product in products %}
+        <div class="col-md-6 col-lg-3">
+            <div class="card product-card h-100">
+                <div class="product-img-box position-relative">
+                    <span class="position-absolute top-0 start-0 m-3 badge bg-warning text-dark px-3 py-1.5 rounded-pill fw-bold text-uppercase fs-11 shadow-xs">
+                        {{ product.tag }}
+                    </span>
+                    <img src="{{ url_for('static', filename='images/' + product.image) }}" alt="{{ product.name }}" class="product-img">
+                </div>
+
+                <div class="p-4 d-flex flex-column h-100">
+                    <span class="text-secondary small fw-bold text-uppercase tracking-wider mb-1 fs-11">{{ product.category }}</span>
+                    <h5 class="fw-bold text-dark mb-2 fs-17">{{ product.name }}</h5>
+                    <p class="text-secondary fs-13 mb-3 leading-snug" style="min-height: 48px;">{{ product.description }}</p>
+
+                    <div class="p-2-5 bg-light rounded-3 mb-3 small text-muted">
+                        <div><i class="ri-ruler-line text-warning me-1"></i><strong>Dimensões:</strong> {{ product.dimensions }}</div>
+                        <div class="text-truncate mt-1"><i class="ri-leaf-line text-success me-1"></i><strong>Madeira:</strong> {{ product.wood_type }}</div>
+                    </div>
+
+                    <div class="mt-auto pt-2 d-flex align-items-center justify-content-between">
+                        <div>
+                            <small class="d-block text-muted fs-11">Valor sob encomenda</small>
+                            <div class="price-tag">R$ {{ "%.2f"|format(product.price)|replace('.', ',') }}</div>
+                        </div>
+                        <a href="https://api.whatsapp.com/send?phone=5581994522504&text=Ol%C3%A1%20Olinda!%20Tenho%20interesse%20na%20pe%C3%A7a%20'{{ product.name }}'%20(Cod%20{{ product.id }})." 
+                           target="_blank" 
+                           class="btn btn-warning rounded-circle p-0 d-inline-flex align-items-center justify-content-center text-dark shadow-sm hover-lift"
+                           style="width: 44px; height: 44px;"
+                           title="Comprar / Encomendar no WhatsApp">
+                            <i class="ri-whatsapp-line fs-22"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- Banner Peça Sob Medida -->
+    <div class="p-5 bg-gradient rounded-4 text-white text-center mt-5 border border-warning shadow-lg" style="background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);">
+        <i class="ri-ruler-2-line text-warning display-4 mb-3"></i>
+        <h3 class="fw-bold text-white mb-2">Deseja um Projeto 100% Sob Medida?</h3>
+        <p class="lead text-light opacity-87 mx-auto mb-4" style="max-width: 680px;">
+            Fabricamos mesas, aparadores, cristaleiras, portas e réplicas exclusivas de acordo com a planta e dimensões do seu ambiente.
+        </p>
+        <a href="https://api.whatsapp.com/send?phone=5581994522504&text=Ol%C3%A1%20Olinda!%20Gostaria%20de%20solicitar%20um%20projeto%20sob%20medida." 
+           target="_blank" 
+           class="btn btn-warning btn-lg rounded-pill px-5 fw-bold text-dark shadow-sm">
+            <i class="ri-whatsapp-line me-2"></i> Solicitar Orçamento no WhatsApp
+        </a>
+    </div>
+
+</div>
+{% endblock content %}

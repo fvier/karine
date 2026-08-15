@@ -1,0 +1,143 @@
+{% extends "layouts/base.html" %}
+
+{% block title %}Blog | Olinda Aguiar - Artes em Madeira{% endblock title %}
+
+{% block content %}
+<style>
+    .blog-header-bg {
+        background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+        color: #fff;
+    }
+    .blog-card {
+        border-radius: 18px;
+        border: 1px solid #e2e8f0;
+        box-shadow: 0 10px 30px rgba(15, 23, 42, 0.05);
+        transition: transform 0.25s ease, box-shadow 0.25s ease;
+        overflow: hidden;
+    }
+    .blog-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 20px 40px rgba(15, 23, 42, 0.14);
+        border-color: #d97706;
+    }
+    .blog-card:hover .blog-card-img {
+        transform: scale(1.04);
+    }
+    .blog-card-img-wrap {
+        overflow: hidden;
+        height: 220px;
+        position: relative;
+    }
+    .blog-card-img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.45s ease;
+        display: block;
+    }
+    .blog-card-img-wrap .blog-cat-badge {
+        position: absolute;
+        top: 14px;
+        left: 14px;
+        z-index: 2;
+    }
+    .blog-read-time {
+        position: absolute;
+        bottom: 12px;
+        right: 14px;
+        background: rgba(15, 23, 42, 0.65);
+        color: #fff;
+        font-size: 0.75rem;
+        padding: 3px 10px;
+        border-radius: 20px;
+        backdrop-filter: blur(6px);
+    }
+    .author-micro-avatar {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 2px solid #d97706;
+    }
+</style>
+
+<!-- Header Blog -->
+<div class="blog-header-bg py-5">
+    <div class="container py-3">
+        <div class="row align-items-center justify-content-between">
+            <div class="col-lg-8">
+                <a href="/" class="btn btn-outline-light rounded-pill px-3 py-1 mb-3 small d-inline-flex align-items-center gap-1">
+                    <i class="ri-arrow-left-line"></i> Voltar ao Atelier
+                </a>
+                <span class="badge bg-warning text-dark px-3 py-1.5 rounded-pill fw-bold text-uppercase d-block mb-2 style-badge" style="width: fit-content;">Diário do Atelier</span>
+                <h1 class="display-5 fw-extrabold text-white mb-2">Blog Olinda Aguiar</h1>
+                <p class="lead text-light opacity-87 mb-0" style="max-width: 650px;">
+                    Histórias, sustentabilidade, liderança feminina e bastidores da criação artística em madeira de demolição.
+                </p>
+            </div>
+            <div class="col-lg-4 text-lg-end mt-4 mt-lg-0">
+                <img src="{{ url_for('static', filename='images/logo_icon.png') }}" alt="Emblema Olinda Aguiar" style="max-height: 95px; filter: drop-shadow(0 4px 12px rgba(0,0,0,0.5));">
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Listagem de Artigos -->
+<div class="container py-5">
+    <div class="row g-4">
+        {% for post in posts %}
+        <div class="col-md-6 col-lg-4">
+            <article class="card h-100 blog-card bg-white">
+
+                <!-- Imagem de Capa -->
+                <a href="/blog/{{ post.slug }}" class="blog-card-img-wrap d-block">
+                    <img src="{{ url_for('static', filename='images/' + (post.image_filename or 'logo_olinda_aguiar.png')) }}"
+                         alt="{{ post.title }}"
+                         class="blog-card-img">
+                    <span class="blog-cat-badge badge bg-warning text-dark fw-bold text-uppercase fs-11 px-3 py-1 rounded-pill shadow-sm">
+                        {{ post.category }}
+                    </span>
+                    <span class="blog-read-time">
+                        <i class="ri-time-line me-1"></i>{{ post.read_time or '3 min' }}
+                    </span>
+                </a>
+
+                <!-- Corpo do Card -->
+                <div class="p-4 d-flex flex-column h-100" style="flex: 1;">
+
+                    <!-- Data -->
+                    <div class="text-muted small mb-2">
+                        <i class="ri-calendar-line me-1"></i>
+                        {{ post.created_at.strftime('%d/%m/%Y') if post.created_at else '09/08/2026' }}
+                    </div>
+
+                    <!-- Título -->
+                    <h3 class="fw-bold text-dark mb-2 lh-sm fs-20">
+                        <a href="/blog/{{ post.slug }}" class="text-dark text-decoration-none hover-warning">{{ post.title }}</a>
+                    </h3>
+
+                    <!-- Resumo -->
+                    <p class="text-secondary fs-14 mb-4 leading-relaxed flex-grow-1">
+                        {{ post.subtitle or (post.content | striptags | truncate(110)) }}
+                    </p>
+
+                    <!-- Rodapé: Autor + Botão -->
+                    <div class="mt-auto pt-3 border-top d-flex align-items-center justify-content-between">
+                        <div class="d-flex align-items-center gap-2">
+                            <img src="{{ url_for('static', filename='images/logo_icon.png') }}"
+                                 class="author-micro-avatar bg-dark p-0-5"
+                                 alt="{{ post.author }}">
+                            <span class="small fw-semibold text-dark">{{ post.author }}</span>
+                        </div>
+                        <a href="/blog/{{ post.slug }}" class="btn btn-sm btn-warning rounded-pill px-3 fw-bold text-dark">
+                            Ler <i class="ri-arrow-right-line ms-1"></i>
+                        </a>
+                    </div>
+                </div>
+
+            </article>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock content %}

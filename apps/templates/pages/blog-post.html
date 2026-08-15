@@ -1,0 +1,337 @@
+{% extends "layouts/base.html" %}
+
+{% block title %}{{ post.title }} | Blog Olinda Aguiar{% endblock title %}
+
+{% block content %}
+<style>
+    .blog-details-bg {
+        background-color: #f8fafc;
+    }
+    .post-cover-img {
+        width: 100%;
+        max-height: 420px;
+        object-fit: cover;
+        border-radius: 16px;
+        box-shadow: 0 10px 30px rgba(15, 23, 42, 0.1);
+    }
+    .author-avatar {
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        object-fit: cover;
+    }
+    .action-icon-btn {
+        width: 40px;
+        height: 40px;
+        border-radius: 10px;
+        background-color: #f1f5f9;
+        color: #64748b;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s ease;
+        border: none;
+    }
+    .action-icon-btn:hover {
+        background-color: #e2e8f0;
+        color: #0f172a;
+    }
+    .action-icon-btn.active-heart {
+        background-color: #fee2e2;
+        color: #ef4444;
+    }
+    .action-icon-btn.active-star {
+        background-color: #fef3c7;
+        color: #d97706;
+    }
+    .tag-badge {
+        background-color: #f1f5f9;
+        color: #475569;
+        font-size: 0.825rem;
+        font-weight: 500;
+        padding: 0.35rem 0.85rem;
+        border-radius: 8px;
+        text-decoration: none;
+        display: inline-block;
+        transition: all 0.2s;
+    }
+    .tag-badge:hover {
+        background-color: #e2e8f0;
+        color: #0f172a;
+    }
+    .lahomes-quote-card {
+        background-color: #f3f0ff;
+        border-radius: 14px;
+        padding: 1.5rem 1.75rem;
+        margin: 2rem 0;
+    }
+    .sidebar-card {
+        background: #ffffff;
+        border-radius: 16px;
+        border: 1px solid #e2e8f0;
+        padding: 1.5rem;
+        box-shadow: 0 4px 20px rgba(15, 23, 42, 0.03);
+        margin-bottom: 1.5rem;
+    }
+    .popular-post-thumb {
+        width: 72px;
+        height: 72px;
+        border-radius: 10px;
+        object-fit: cover;
+    }
+    .gallery-grid-img {
+        width: 100%;
+        height: 70px;
+        border-radius: 8px;
+        object-fit: cover;
+    }
+    .article-text-body {
+        font-size: 1.05rem;
+        line-height: 1.85;
+        color: #475569;
+    }
+    .article-text-body p {
+        margin-bottom: 1.25rem;
+    }
+</style>
+
+<div class="blog-details-bg py-4">
+    <div class="container">
+        
+        <!-- Breadcrumb Superior -->
+        <div class="d-flex align-items-center justify-content-between mb-3 fs-14">
+            <h5 class="fw-bold text-dark mb-0">Blog Details</h5>
+            <div class="text-muted">
+                <a href="/blog" class="text-decoration-none text-muted">Blog</a> &gt; <span class="text-dark fw-semibold">Blog Details</span>
+            </div>
+        </div>
+
+        <div class="row g-4">
+            <!-- COLUNA ESQUERDA: CONTEÚDO DO POST (col-lg-8) -->
+            <div class="col-lg-8">
+                <div class="bg-white rounded-4 p-4 p-md-5 border shadow-sm">
+                    
+                    <!-- Imagem de Capa Destaque -->
+                    <div class="mb-4">
+                        <img src="{{ url_for('static', filename='images/' + (post.image_filename or 'logo_olinda_aguiar.png')) }}" 
+                             alt="{{ post.title }}" 
+                             class="post-cover-img">
+                    </div>
+
+                    <!-- Barra de Autor e Ações (Share, Heart, Bookmark) -->
+                    <div class="d-flex flex-wrap align-items-center justify-content-between gap-3 mb-3">
+                        <div class="d-flex align-items-center gap-3">
+                            <img src="{{ url_for('static', filename='images/logo_icon.png') }}" alt="{{ post.author }}" class="author-avatar bg-dark p-1 border">
+                            <div>
+                                <h6 class="fw-bold text-dark mb-0">{{ post.author or 'Olinda Aguiar' }}</h6>
+                                <small class="text-muted">{{ post.created_at.strftime('%b %d, %Y') if post.created_at else post.date or 'Aug 09, 2026' }}</small>
+                            </div>
+                        </div>
+
+                        <!-- Ícones de Ação (Estilo Lahomes) -->
+                        <div class="d-flex align-items-center gap-2">
+                            <button class="action-icon-btn" title="Compartilhar"><i class="ri-share-forward-line fs-18"></i></button>
+                            <button class="action-icon-btn active-heart" title="Curtir"><i class="ri-heart-fill fs-18"></i></button>
+                            <button class="action-icon-btn active-star" title="Salvar"><i class="ri-star-fill fs-18"></i></button>
+                            <button class="action-icon-btn" title="Mais Opções"><i class="ri-more-2-fill fs-18"></i></button>
+                        </div>
+                    </div>
+
+                    <!-- Badges de Categorias / Tags -->
+                    <div class="d-flex flex-wrap gap-2 mb-3">
+                        <a href="#" class="tag-badge">Home</a>
+                        <a href="#" class="tag-badge">{{ post.category or 'Arte & Sustentabilidade' }}</a>
+                        <a href="#" class="tag-badge">Blog</a>
+                        <a href="#" class="tag-badge">Madeira de Demolição</a>
+                        <a href="#" class="tag-badge">Olinda/PE</a>
+                    </div>
+
+                    <!-- Título do Post -->
+                    <h1 class="fw-bold text-dark fs-28 mb-3 lh-sm">{{ post.title }}</h1>
+
+                    <!-- Texto do Post -->
+                    <div class="article-text-body">
+                        {% if post.content %}
+                            {{ post.content | safe }}
+                        {% elif post.content_paragraphs %}
+                            {% for paragraph in post.content_paragraphs %}
+                            <p>{{ paragraph }}</p>
+                            {% endfor %}
+                        {% endif %}
+
+                        <!-- Bloco de Citação em Destaque (Estilo Lahomes Quote Box) -->
+                        <div class="lahomes-quote-card">
+                            <h6 class="fw-bold text-primary mb-1">Preservação & Sustentabilidade</h6>
+                            <p class="mb-0 text-secondary fs-15">
+                                Resgatamos madeiras de lei centenárias dos casarios históricos de Recife e Olinda para transformá-las em obras de arte exclusivas com secagem natural incomparável.
+                            </p>
+                        </div>
+
+                        <p>
+                            Cada ranhura e marca do tempo conta uma história rica do nosso patrimônio pernambucano. No Atelier Olinda Aguiar, aliamos técnicas artesanais e acabamento ecológico em cera natural.
+                        </p>
+                    </div>
+
+                    <!-- Seção de Comentários (Estilo Lahomes Post Comments) -->
+                    <div class="mt-5 pt-4 border-top">
+                        <h5 class="fw-bold text-dark mb-3"><i class="ri-chat-3-line text-warning me-2"></i>Post Comments</h5>
+
+                        <!-- Formulário de Comentário -->
+                        <div class="mb-4">
+                            <textarea class="form-control bg-light border p-3 rounded-3 fs-15 mb-3" 
+                                      rows="4" 
+                                      placeholder="Write Comment ......"></textarea>
+                            <div class="text-end">
+                                <button type="button" class="btn btn-warning fw-bold px-4 rounded-3 text-dark shadow-sm">
+                                    Post Comment
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Lista de Comentários Existentes -->
+                        <div class="d-flex flex-column gap-3">
+                            <!-- Comentário 1 -->
+                            <div class="p-3 rounded-3 bg-light d-flex gap-3">
+                                <img src="{{ url_for('static', filename='images/logo_icon.png') }}" class="author-avatar bg-dark p-1" alt="Avatar">
+                                <div class="flex-grow-1">
+                                    <div class="d-flex align-items-center justify-content-between mb-1">
+                                        <div>
+                                            <h6 class="fw-bold text-dark mb-0 fs-15">Tina C. Vaden</h6>
+                                            <small class="text-muted">Jun 23, 2026, 11:45 am</small>
+                                        </div>
+                                        <button class="btn btn-sm btn-light border text-muted"><i class="ri-chat-1-line me-1"></i>Responder</button>
+                                    </div>
+                                    <p class="text-secondary fs-14 mb-2">
+                                        Que trabalho inspirador! É maravilhoso ver o resgate das madeiras históricas dos casarios de Olinda transformados em arte.
+                                    </p>
+                                    <div class="d-flex align-items-center gap-3 text-muted fs-13">
+                                        <span><i class="ri-thumb-up-fill text-warning me-1"></i> 67</span>
+                                        <span><i class="ri-chat-3-fill text-secondary me-1"></i> 34</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Comentário 2 -->
+                            <div class="p-3 rounded-3 bg-light d-flex gap-3">
+                                <img src="{{ url_for('static', filename='images/logo_olinda_aguiar.png') }}" class="author-avatar bg-dark p-1" alt="Avatar">
+                                <div class="flex-grow-1">
+                                    <div class="d-flex align-items-center justify-content-between mb-1">
+                                        <div>
+                                            <h6 class="fw-bold text-dark mb-0 fs-15">Chas E. Baker</h6>
+                                            <small class="text-muted">Jun 24, 2026, 10:05 am</small>
+                                        </div>
+                                        <button class="btn btn-sm btn-light border text-muted"><i class="ri-chat-1-line me-1"></i>Responder</button>
+                                    </div>
+                                    <p class="text-secondary fs-14 mb-0">
+                                        Acompanho o trabalho do atelier Olinda Aguiar há algum tempo. As esculturas e móveis em madeira de demolição são de altíssimo padrão.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- COLUNA DIREITA: SIDEBAR (col-lg-4) -->
+            <div class="col-lg-4">
+                
+                <!-- Widget 1: Search -->
+                <div class="sidebar-card">
+                    <div class="input-group">
+                        <span class="input-group-text bg-light border-end-0 text-muted"><i class="ri-search-line"></i></span>
+                        <input type="text" class="form-control bg-light border-start-0 fs-15" placeholder="Search">
+                    </div>
+                </div>
+
+                <!-- Widget 2: Categories Checkbox List -->
+                <div class="sidebar-card">
+                    <h6 class="fw-bold text-dark mb-3 pb-2 border-bottom">Categories</h6>
+                    <div class="d-flex flex-column gap-2.5">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="cat1">
+                            <label class="form-check-label text-secondary fs-15" for="cat1">Móveis Sob Medida</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="cat2" checked>
+                            <label class="form-check-label text-dark fw-bold fs-15" for="cat2">Arte & Sustentabilidade</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="cat3">
+                            <label class="form-check-label text-secondary fs-15" for="cat3">Esculturas & Painéis</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="cat4">
+                            <label class="form-check-label text-secondary fs-15" for="cat4">Patrimônio & Restauração</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="cat5">
+                            <label class="form-check-label text-secondary fs-15" for="cat5">Institucional & Olinda</label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Widget 3: Popular Post List -->
+                <div class="sidebar-card">
+                    <h6 class="fw-bold text-dark mb-3 pb-2 border-bottom">Popular Post</h6>
+                    <div class="d-flex flex-column gap-3">
+                        {% for recent in recent_posts %}
+                        <div class="d-flex gap-3 align-items-center">
+                            <img src="{{ url_for('static', filename='images/' + (recent.image_filename or 'logo_icon.png')) }}" 
+                                 class="popular-post-thumb bg-dark p-1 border" 
+                                 alt="{{ recent.title }}">
+                            <div>
+                                <h6 class="fw-bold fs-14 mb-1 lh-sm">
+                                    <a href="/blog/{{ recent.slug }}" class="text-dark text-decoration-none hover-warning">{{ recent.title }}</a>
+                                </h6>
+                                <small class="text-muted fs-12">{{ recent.created_at.strftime('%b %d, %Y') if recent.created_at else 'Aug 09, 2026' }}</small>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <!-- Widget 4: Text Widget -->
+                <div class="sidebar-card">
+                    <h6 class="fw-bold text-dark mb-2 pb-2 border-bottom">Text Widget</h6>
+                    <p class="text-secondary fs-14 mb-0 leading-relaxed">
+                        Nosso blog entrega conteúdo exclusivo desenvolvido para compartilhar o processo criativo de Olinda Aguiar, técnicas de restauração e a preservação da história dos casarios de Recife e Olinda.
+                    </p>
+                </div>
+
+                <!-- Widget 5: Tags -->
+                <div class="sidebar-card">
+                    <h6 class="fw-bold text-dark mb-3 pb-2 border-bottom">Tags</h6>
+                    <div class="d-flex flex-wrap gap-2">
+                        <a href="#" class="tag-badge">Home</a>
+                        <a href="#" class="tag-badge">Demolição</a>
+                        <a href="#" class="tag-badge">Blog</a>
+                        <a href="#" class="tag-badge">Peroba Rosa</a>
+                        <a href="#" class="tag-badge">Olinda/PE</a>
+                        <a href="#" class="tag-badge">Atelier</a>
+                    </div>
+                </div>
+
+                <!-- Widget 6: Photo And Video Gallery (3x3 Grid) -->
+                <div class="sidebar-card">
+                    <div class="d-flex align-items-center justify-content-between mb-3 pb-2 border-bottom">
+                        <h6 class="fw-bold text-dark mb-0">Photo And Video</h6>
+                        <a href="/loja" class="small text-warning fw-bold text-decoration-none">See all</a>
+                    </div>
+                    <div class="row g-2">
+                        <div class="col-4"><img src="{{ url_for('static', filename='images/card_esculturas.png') }}" class="gallery-grid-img" alt="Gallery"></div>
+                        <div class="col-4"><img src="{{ url_for('static', filename='images/card_moveis.png') }}" class="gallery-grid-img" alt="Gallery"></div>
+                        <div class="col-4"><img src="{{ url_for('static', filename='images/card_paineis.png') }}" class="gallery-grid-img" alt="Gallery"></div>
+                        <div class="col-4"><img src="{{ url_for('static', filename='images/card_restauracao.png') }}" class="gallery-grid-img" alt="Gallery"></div>
+                        <div class="col-4"><img src="{{ url_for('static', filename='images/logo_icon.png') }}" class="gallery-grid-img bg-dark p-1" alt="Gallery"></div>
+                        <div class="col-4"><img src="{{ url_for('static', filename='images/logo_olinda_aguiar.png') }}" class="gallery-grid-img bg-dark p-1" alt="Gallery"></div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock content %}

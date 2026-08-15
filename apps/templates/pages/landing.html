@@ -1,0 +1,481 @@
+{% extends 'layouts/base.html' %}
+
+{% block title %}Karine Mascena | Advogada · Tributário, Advocacy & Terceiro Setor{% endblock title %}
+
+{% block html_attribute %}data-bs-theme="light"{% endblock html_attribute %}
+
+{% block body_attribute %}class="landing-page bg-light text-dark"{% endblock body_attribute %}
+
+{% block content %}
+<script>
+    (() => {
+        const savedTheme = localStorage.getItem('km_landing_theme');
+        document.documentElement.setAttribute('data-bs-theme', savedTheme === 'dark' ? 'dark' : 'light');
+    })();
+</script>
+<!-- Custom Styling for Karine Mascena Branding -->
+<style>
+    .landing-page {
+        --km-plum: #4A2338;
+        --km-gold: #C5A059;
+        --km-gold-soft: #fbf5e8;
+        --km-dark: #1E1018;
+    }
+    .landing-page .text-primary { color: var(--km-plum) !important; }
+    .landing-page .bg-primary { background-color: var(--km-plum) !important; }
+    .landing-page .btn-primary {
+        background-color: var(--km-plum);
+        border-color: var(--km-plum);
+        color: #fff;
+    }
+    .landing-page .btn-primary:hover {
+        background-color: #381a2b;
+        border-color: #381a2b;
+        color: #fff;
+    }
+    .landing-page .btn-gold {
+        background-color: var(--km-gold);
+        border-color: var(--km-gold);
+        color: #fff;
+        font-weight: 600;
+    }
+    .landing-page .btn-gold:hover {
+        background-color: #b08d4a;
+        border-color: #b08d4a;
+        color: #fff;
+    }
+    .hero-full-bg {
+        position: relative;
+        background: #1e1018;
+        min-height: 85vh;
+        display: flex;
+        align-items: center;
+    }
+    .hero-background-carousel { position:absolute;inset:0;z-index:0; }
+    .hero-background-carousel .carousel-inner,
+    .hero-background-carousel .carousel-item { height:100%; }
+    .hero-slide-bg {
+        width:100%;
+        height:100%;
+        background-position:center top;
+        background-size:cover;
+        background-repeat:no-repeat;
+    }
+    .hero-overlay {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(90deg, rgba(30, 16, 24, 0.93) 0%, rgba(30, 16, 24, 0.82) 55%, rgba(30, 16, 24, 0.40) 85%, rgba(30, 16, 24, 0.15) 100%);
+        z-index: 1;
+        pointer-events: none;
+    }
+    .hero-content {
+        position: relative;
+        z-index: 2;
+    }
+    .glass-card {
+        background: rgba(30, 16, 24, 0.70);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border: 1px solid rgba(197, 160, 89, 0.35);
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
+    }
+    .landing-navbar-brand { gap:12px; }
+    .landing-brand-name { color:#4A2338;font-size:19px;font-weight:800;letter-spacing:-.02em;line-height:1.1; }
+    .landing-brand-name small { display:block;color:#855c73;font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-top:3px; }
+    .hover-lift {
+        transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.25s ease;
+    }
+    .hover-lift:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 16px 36px rgba(74, 35, 56, 0.15) !important;
+    }
+    .feature-card-icon {
+        width: 56px;
+        height: 56px;
+        border-radius: 16px;
+        display: grid;
+        place-items: center;
+        background: #fbf5e8;
+        color: #C5A059;
+        font-size: 26px;
+    }
+    .site-footer { background: #1e1018; color: #d1c4cb; }
+    .site-footer h5, .site-footer h6 { color: #fff; font-weight: 700; }
+    .site-footer a { color: #d1c4cb; transition: color .2s ease; }
+    .site-footer a:hover { color: #C5A059; }
+</style>
+
+<!-- Floating WhatsApp Button -->
+<a href="https://wa.me/5581984472771?text=Ol%C3%A1!%20Gostaria%20de%20falar%20com%20Dra.%20Karine%20Mascena."
+   target="_blank"
+   rel="noopener noreferrer"
+   class="position-fixed bottom-0 end-0 m-4 z-3 btn btn-success rounded-circle shadow-lg p-3 d-flex align-items-center justify-content-center border-0 hover-lift"
+   style="width: 60px; height: 60px; background-color: #25d366;"
+   title="Falar no WhatsApp (81) 9 8447-2771">
+    <i class="ri-whatsapp-fill fs-32 text-white"></i>
+</a>
+
+<!-- Header Navigation -->
+<nav class="navbar navbar-expand-lg navbar-light bg-white py-2 sticky-top border-bottom border-light-subtle shadow-sm z-3">
+    <div class="container">
+        <!-- Logo Image -->
+        <a class="navbar-brand landing-navbar-brand d-flex align-items-center py-0" href="/">
+            <img src="{{ config.ASSETS_ROOT }}/images/logo_kom_dark.png" alt="Karine Mascena" style="height:44px;width:auto">
+            <span class="landing-brand-name">Karine Mascena<small>Advocacia & Advocacy</small></span>
+        </a>
+
+        <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarContent">
+            <ul class="navbar-nav me-auto ms-lg-4 mb-2 mb-lg-0 fw-semibold text-secondary fs-15">
+                <li class="nav-item"><a class="nav-link active text-primary" href="#inicio">Início</a></li>
+                <li class="nav-item"><a class="nav-link text-dark hover-primary" href="#sobre">Perfil & Atuação</a></li>
+                <li class="nav-item"><a class="nav-link text-dark hover-primary" href="#atuacao">Áreas de Atuação</a></li>
+                <li class="nav-item"><a class="nav-link text-dark hover-primary" href="#terceirosetor">Terceiro Setor & Reforma Tributária</a></li>
+                <li class="nav-item"><a class="nav-link text-dark hover-primary" href="/blog"><i class="ri-article-line me-1 text-primary"></i>Artigos</a></li>
+                <li class="nav-item"><a class="nav-link text-dark hover-primary" href="/links"><i class="ri-links-line me-1 text-warning"></i>Links</a></li>
+            </ul>
+
+            <div class="d-flex align-items-center gap-2">
+                <!-- Redes Sociais -->
+                <a href="https://www.linkedin.com/in/karinemascena/" target="_blank" rel="noopener noreferrer" class="btn btn-outline-secondary btn-sm rounded-circle p-0 d-inline-flex align-items-center justify-content-center" style="width:36px;height:36px" title="LinkedIn">
+                    <i class="ri-linkedin-fill fs-18" style="color:#0077b5"></i>
+                </a>
+                <a href="https://www.instagram.com/karinemascena/" target="_blank" rel="noopener noreferrer" class="btn btn-outline-secondary btn-sm rounded-circle p-0 d-inline-flex align-items-center justify-content-center" style="width:36px;height:36px" title="Instagram">
+                    <i class="ri-instagram-line fs-18" style="color:#e1306c"></i>
+                </a>
+
+                <!-- WhatsApp Direct -->
+                <a href="https://wa.me/5581984472771?text=Ol%C3%A1!%20Gostaria%20de%20agendar%20uma%20consulta."
+                   target="_blank"
+                   rel="noopener noreferrer"
+                   class="btn btn-success btn-sm rounded-pill px-3 py-1.5 text-white border-0 shadow-sm d-inline-flex align-items-center gap-1.5"
+                   style="background-color: #25d366;">
+                    <i class="ri-whatsapp-line fs-16"></i> <span>(81) 9 8447-2771</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<!-- HERO SECTION -->
+<section id="inicio" class="hero-full-bg py-5 overflow-hidden position-relative">
+    <!-- Carrossel de Imagens de Fundo -->
+    <div id="landing-hero-carousel" class="carousel slide carousel-fade hero-background-carousel" data-bs-ride="carousel" data-bs-interval="6000" data-bs-pause="false">
+        <div class="carousel-inner">
+            {% for image in carousel_images %}
+            <div class="carousel-item {% if loop.first %}active{% endif %}">
+                <div class="hero-slide-bg" style="background-image:url('{{ config.ASSETS_ROOT }}/images/{{ image.filename }}?v={{ image.version }}')"></div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Botão de controle -->
+    <button class="carousel-control-next position-absolute top-50 end-0 translate-middle-y me-3 me-md-4 rounded-circle bg-dark bg-opacity-50 text-white p-0 d-flex align-items-center justify-content-center border border-white border-opacity-30 shadow-sm"
+            type="button" 
+            data-bs-target="#landing-hero-carousel" 
+            data-bs-slide="next" 
+            style="width: 46px; height: 46px; z-index: 10; cursor: pointer;" 
+            title="Próxima foto">
+        <i class="ri-arrow-right-s-line fs-26"></i>
+    </button>
+
+    <div class="hero-overlay"></div>
+
+    <div class="container hero-content d-flex flex-column justify-content-center h-100 py-5 position-relative z-2" style="min-height: 82vh;">
+        <div class="row align-items-center">
+            <div class="col-lg-9 col-xl-8">
+                <div class="glass-card p-4 p-md-5 rounded-4 text-white shadow-lg border-start border-4" style="border-left-color: var(--km-gold) !important;">
+                    <div class="d-inline-flex align-items-center gap-2 px-3 py-1 rounded-pill bg-white bg-opacity-10 text-warning fw-bold fs-13 mb-3 border border-white border-opacity-20">
+                        <i class="ri-scales-3-line text-warning"></i>
+                        <span>Advocacia Multidisciplinar & Articulação Institucional</span>
+                    </div>
+
+                    <h1 class="display-5 fw-bold text-white mb-2" style="font-family: serif; letter-spacing: -0.01em;">
+                        Karine Mascena
+                    </h1>
+                    <p class="fs-18 text-warning fw-semibold mb-4">
+                        Soluções Estratégicas no Terceiro Setor · Impactos da Reforma Tributária · Prevenção e Resolução de Conflitos
+                    </p>
+
+                    <div class="d-flex flex-wrap align-items-center gap-3">
+                        <a href="https://wa.me/5581984472771?text=Ol%C3%A1%20Dra.%20Karine,%20gostaria%20de%20falar%20sobre%20uma%20consulta." target="_blank" rel="noopener noreferrer" class="btn btn-gold rounded-pill px-4 py-2.5 shadow-sm d-inline-flex align-items-center gap-2">
+                            <i class="ri-whatsapp-line fs-18"></i> <span>Falar com Dra. Karine</span>
+                        </a>
+                        <a href="#sobre" class="btn btn-outline-light rounded-pill px-4 py-2.5 d-inline-flex align-items-center gap-2">
+                            <span>Conhecer Perfil</span> <i class="ri-arrow-down-line"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- SEÇÃO: SOBRE KARINE MASCENA (TEXTO EXATO) -->
+<section id="sobre" class="py-5 bg-white border-top border-light-subtle">
+    <div class="container py-lg-4">
+        <div class="row align-items-center gy-4">
+            <div class="col-lg-5">
+                <div class="position-relative">
+                    <img src="{{ config.ASSETS_ROOT }}/images/karine_perfil.jpg" alt="Karine Mascena" class="w-100 rounded-4 shadow-lg object-fit-cover" style="max-height: 540px;">
+                    <div class="position-absolute bottom-0 start-0 m-3 p-3 bg-white rounded-3 shadow-lg border border-light-subtle" style="max-width: 300px;">
+                        <div class="d-flex align-items-center gap-2">
+                            <img src="{{ config.ASSETS_ROOT }}/images/logo_kom_dark.png" alt="KOM Logo" style="height: 34px; width: auto;">
+                            <div>
+                                <h6 class="fw-bold mb-0" style="color: var(--km-plum)">Karine Mascena</h6>
+                                <small class="text-muted fs-12">Advogada · OAB/PE</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-7 ps-lg-5">
+                <span class="badge px-3 py-2 rounded-pill fw-bold text-uppercase mb-2" style="background:#fbf5e8; color: var(--km-gold)">Perfil Profissional & Abordagem</span>
+                <h2 class="display-6 fw-bold text-dark mb-3" style="font-family: serif;">Profundidade técnica com comunicação acessível e foco social</h2>
+                
+                <p class="text-secondary fs-16 mb-3 lh-relaxed">
+                    Sou advogada com experiência multidisciplinar em Direito e gestão, atuando na prevenção e resolução de conflitos, contratos, análise de riscos e gestão de demandas. Possuo formação em <strong>Mediação, Negociação, Arbitragem e Práticas Sistêmicas</strong>, aliada à capacitação em <strong>Advocacy</strong>, o que amplia minha atuação para a articulação institucional e construção de soluções estratégicas.
+                </p>
+
+                <p class="text-secondary fs-16 mb-3 lh-relaxed">
+                    Tenho experiência com <strong>atendimento jurídico humanizado</strong>, análise de viabilidade de casos, elaboração de relatórios técnicos, produção de documentos jurídicos em <strong>linguagem acessível</strong> e articulação interinstitucional com diferentes atores e órgãos do sistema de justiça. Minha atuação combina profundidade técnica, capacidade de análise e comunicação transparente.
+                </p>
+
+                <p class="text-secondary fs-16 mb-4 lh-relaxed">
+                    No <strong>Terceiro Setor</strong>, concentro minha atuação em advocacy, relações institucionais e nos impactos da <strong>Reforma Tributária</strong> sobre organizações da sociedade civil, com atenção à segurança jurídica, governança, sustentabilidade institucional e preservação de suas finalidades sociais.
+                </p>
+
+                <div class="d-flex flex-wrap gap-2 mb-4">
+                    <span class="badge bg-light text-dark border rounded-pill px-3 py-2"><i class="ri-checkbox-circle-line text-success me-1"></i>Mediação & Negociação</span>
+                    <span class="badge bg-light text-dark border rounded-pill px-3 py-2"><i class="ri-checkbox-circle-line text-success me-1"></i>Práticas Sistêmicas & Arbitragem</span>
+                    <span class="badge bg-light text-dark border rounded-pill px-3 py-2"><i class="ri-checkbox-circle-line text-success me-1"></i>Reforma Tributária & 3º Setor</span>
+                    <span class="badge bg-light text-dark border rounded-pill px-3 py-2"><i class="ri-checkbox-circle-line text-success me-1"></i>Linguagem Acessível</span>
+                </div>
+
+                <div class="d-flex flex-wrap gap-2">
+                    <a href="https://www.linkedin.com/in/karinemascena/" target="_blank" rel="noopener noreferrer" class="btn btn-outline-dark rounded-pill px-4 fw-semibold d-inline-flex align-items-center gap-2">
+                        <i class="ri-linkedin-fill text-primary fs-18"></i> Perfil no LinkedIn
+                    </a>
+                    <a href="https://www.instagram.com/karinemascena/" target="_blank" rel="noopener noreferrer" class="btn btn-outline-secondary rounded-pill px-4 fw-semibold d-inline-flex align-items-center gap-2">
+                        <i class="ri-instagram-line text-danger fs-18"></i> Perfil no Instagram
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- SEÇÃO: ÁREAS DE ATUAÇÃO -->
+<section id="atuacao" class="py-5 bg-light border-top border-light-subtle">
+    <div class="container py-lg-4">
+        <div class="text-center max-w-700 mx-auto mb-5">
+            <span class="badge px-3 py-2 rounded-pill fw-bold text-uppercase mb-2" style="background:#fbf5e8; color: var(--km-gold)">Especialidades</span>
+            <h2 class="display-6 fw-bold text-dark" style="font-family: serif;">Especialidades & Frentes de Atuação</h2>
+            <p class="text-secondary fs-16">Integração entre técnica jurídica, inteligência institucional e compromisso com o impacto social.</p>
+        </div>
+
+        <div class="row g-4">
+            <!-- Card 1 -->
+            <div class="col-md-6 col-lg-3">
+                <div class="card h-100 border-0 shadow-sm rounded-4 overflow-hidden hover-lift bg-white p-4 border border-light-subtle">
+                    <div class="feature-card-icon mb-3"><i class="ri-percent-line"></i></div>
+                    <h4 class="fw-bold text-dark mb-2 fs-19">Reforma Tributária & 3º Setor</h4>
+                    <p class="text-secondary fs-14 mb-3">Análise dos impactos da Reforma Tributária sobre ONGs e OSCs, imunidades fiscais, isenções e adequação regulatória.</p>
+                    <ul class="list-unstyled text-muted small mb-0 d-grid gap-1">
+                        <li><i class="ri-check-line text-success me-1"></i> Diagnóstico fiscal para entidades</li>
+                        <li><i class="ri-check-line text-success me-1"></i> Proteção de imunidades constitucionais</li>
+                        <li><i class="ri-check-line text-success me-1"></i> Sustentabilidade institucional</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Card 2 -->
+            <div class="col-md-6 col-lg-3">
+                <div class="card h-100 border-0 shadow-sm rounded-4 overflow-hidden hover-lift bg-white p-4 border border-light-subtle">
+                    <div class="feature-card-icon mb-3"><i class="ri-megaphone-line"></i></div>
+                    <h4 class="fw-bold text-dark mb-2 fs-19">Advocacy & RelGov</h4>
+                    <p class="text-secondary fs-14 mb-3">Articulação interinstitucional com o sistema de justiça e poder público para defesa legítima de pautas de interesse social.</p>
+                    <ul class="list-unstyled text-muted small mb-0 d-grid gap-1">
+                        <li><i class="ri-check-line text-success me-1"></i> Defesa de pautas públicas</li>
+                        <li><i class="ri-check-line text-success me-1"></i> Mapeamento de stakeholders</li>
+                        <li><i class="ri-check-line text-success me-1"></i> Diálogo transparente com órgãos públicos</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Card 3 -->
+            <div class="col-md-6 col-lg-3">
+                <div class="card h-100 border-0 shadow-sm rounded-4 overflow-hidden hover-lift bg-white p-4 border border-light-subtle">
+                    <div class="feature-card-icon mb-3"><i class="ri-hand-heart-line"></i></div>
+                    <h4 class="fw-bold text-dark mb-2 fs-19">Resolução de Conflitos</h4>
+                    <p class="text-secondary fs-14 mb-3">Aplicação de Mediação, Negociação, Arbitragem e Práticas Sistêmicas na prevenção e pacificação de demandas.</p>
+                    <ul class="list-unstyled text-muted small mb-0 d-grid gap-1">
+                        <li><i class="ri-check-line text-success me-1"></i> Prevenção e composição de litígios</li>
+                        <li><i class="ri-check-line text-success me-1"></i> Práticas sistêmicas e negociação</li>
+                        <li><i class="ri-check-line text-success me-1"></i> Gestão humanizada de casos</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Card 4 -->
+            <div class="col-md-6 col-lg-3">
+                <div class="card h-100 border-0 shadow-sm rounded-4 overflow-hidden hover-lift bg-white p-4 border border-light-subtle">
+                    <div class="feature-card-icon mb-3"><i class="ri-shield-keyhole-line"></i></div>
+                    <h4 class="fw-bold text-dark mb-2 fs-19">Contratos & Riscos</h4>
+                    <p class="text-secondary fs-14 mb-3">Elaboração de contratos, pareceres técnicos e análise de riscos com rigor legal e documentos em linguagem clara e acessível.</p>
+                    <ul class="list-unstyled text-muted small mb-0 d-grid gap-1">
+                        <li><i class="ri-check-line text-success me-1"></i> Contratos e termos de parceria</li>
+                        <li><i class="ri-check-line text-success me-1"></i> Relatórios em linguagem acessível</li>
+                        <li><i class="ri-check-line text-success me-1"></i> Governança e compliance</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- SEÇÃO: DESTAQUE COM FOTO 2 & CONTATO -->
+<section id="terceirosetor" class="py-5 bg-white border-top border-light-subtle">
+    <div class="container py-lg-4">
+        <div class="card border-0 shadow-lg rounded-4 overflow-hidden text-white" style="background: linear-gradient(135deg, #4A2338 0%, #1e1018 100%);">
+            <div class="row g-0 align-items-center">
+                <div class="col-lg-6 p-4 p-md-5">
+                    <span class="badge bg-warning text-dark px-3 py-1.5 rounded-pill fw-bold text-uppercase fs-12 mb-3">Atendimento Humanizado</span>
+                    <h3 class="display-6 fw-bold text-white mb-3" style="font-family: serif;">Fale diretamente com Dra. Karine Mascena</h3>
+                    <p class="text-white opacity-90 fs-16 mb-4 lh-base">
+                        Agende uma reunião inicial para avaliar a viabilidade do seu caso, projeto de advocacy ou assessoria jurídica tributária no Terceiro Setor.
+                    </p>
+                    <div class="d-flex flex-wrap gap-3">
+                        <a href="https://wa.me/5581984472771?text=Ol%C3%A1%20Dra.%20Karine,%20gostaria%20de%20agendar%20um%20atendimento." target="_blank" rel="noopener noreferrer" class="btn btn-gold rounded-pill px-4 py-2.5 shadow-sm d-inline-flex align-items-center gap-2">
+                            <i class="ri-whatsapp-line fs-20"></i> <span>Conversar no WhatsApp (81) 9 8447-2771</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-6 text-center">
+                    <img src="{{ config.ASSETS_ROOT }}/images/karine_kom1.jpg" alt="Karine Mascena" class="w-100 h-100 object-fit-cover" style="max-height: 460px;">
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- SEÇÃO: DÚVIDAS FREQUENTES (FAQ Accordion) -->
+<section id="faq" class="py-5 bg-light border-top border-light-subtle">
+    <div class="container py-lg-4">
+        <div class="text-center max-w-700 mx-auto mb-5">
+            <span class="badge px-3 py-2 rounded-pill fw-bold text-uppercase" style="background:#fbf5e8; color: var(--km-gold)">Esclarecimentos</span>
+            <h2 class="display-6 fw-bold text-dark mt-2" style="font-family: serif;">Perguntas Frequentes</h2>
+            <p class="text-secondary fs-16">Dúvidas comuns sobre consultoria tributária, advocacy e atuação no Terceiro Setor.</p>
+        </div>
+
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="accordion accordion-flush d-grid gap-3" id="faqAccordion">
+
+                    <div class="accordion-item border border-light-subtle rounded-3 overflow-hidden shadow-sm">
+                        <h2 class="accordion-header" id="headingOne">
+                            <button class="accordion-button fw-bold text-dark bg-white shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                <i class="ri-question-line text-warning me-2 fs-18"></i> Como a Reforma Tributária impacta as organizações do Terceiro Setor?
+                            </button>
+                        </h2>
+                        <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body text-secondary fs-15 bg-white">
+                                A Reforma Tributária altera o regime de impostos sobre consumo, doações e receitas institucionais. A consultoria especializada avalia os impactos específicos em cada OSC, assegurando a preservação de imunidades constitucionais e a sustentabilidade financeira da entidade.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item border border-light-subtle rounded-3 overflow-hidden shadow-sm">
+                        <h2 class="accordion-header" id="headingTwo">
+                            <button class="accordion-button collapsed fw-bold text-dark bg-white shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                <i class="ri-question-line text-warning me-2 fs-18"></i> O que é a linguagem jurídica acessível?
+                            </button>
+                        </h2>
+                        <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body text-secondary fs-15 bg-white">
+                                É o compromisso de traduzir termos e relatórios jurídicos complexos em uma linguagem clara, compreensível e transparente, facilitando a tomada de decisão pelos gestores e pela sociedade civil.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item border border-light-subtle rounded-3 overflow-hidden shadow-sm">
+                        <h2 class="accordion-header" id="headingThree">
+                            <button class="accordion-button collapsed fw-bold text-dark bg-white shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                <i class="ri-question-line text-warning me-2 fs-18"></i> Como agendar um atendimento com Dra. Karine Mascena?
+                            </button>
+                        </h2>
+                        <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body text-secondary fs-15 bg-white">
+                                Você pode enviar uma mensagem direta pelo WhatsApp no número <strong>(81) 9 8447-2771</strong> ou conectar-se através dos perfis oficiais no <strong>LinkedIn</strong> e <strong>Instagram</strong>.
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Footer / Contato -->
+<footer id="rodape" class="site-footer py-5 border-top">
+    <div class="container">
+        <div class="row g-5 pb-4">
+            <div class="col-lg-5">
+                <div class="d-flex align-items-center gap-2 mb-3">
+                    <img src="{{ config.ASSETS_ROOT }}/images/logo_kom_white.png" alt="Karine Mascena Logo" style="height:48px;width:auto">
+                    <span class="fs-18 fw-bold text-white d-block">Karine Mascena</span>
+                </div>
+                <p class="mb-3 text-white-50" style="max-width:460px">
+                    Advogada · Direito Tributário, Advocacy no Terceiro Setor, Relações Institucionais e Direitos Humanos.
+                </p>
+                <div class="small text-white-50 d-grid gap-1">
+                    <span>&copy; <script>document.write(new Date().getFullYear())</script> <strong>Karine Mascena</strong> · Todos os direitos reservados.</span>
+                </div>
+            </div>
+
+            <div class="col-6 col-lg-3">
+                <h6 class="mb-3 text-white">Navegação</h6>
+                <nav class="d-grid gap-2 small">
+                    <a href="#inicio">Início</a>
+                    <a href="#sobre">Perfil & Atuação</a>
+                    <a href="#atuacao">Áreas de Atuação</a>
+                    <a href="#terceirosetor">Terceiro Setor</a>
+                    <a href="/links" class="text-warning fw-bold">Linktree & Redes</a>
+                </nav>
+            </div>
+
+            <div class="col-lg-4">
+                <h6 class="mb-3 text-white">Contato Profissional</h6>
+                <div class="footer-contact-item d-flex gap-3 mb-2">
+                    <i class="ri-whatsapp-line fs-20 text-warning"></i>
+                    <div>
+                        <small class="d-block text-white-50">Telefone / WhatsApp</small>
+                        <a class="fw-bold text-white" href="https://wa.me/5581984472771" target="_blank" rel="noopener noreferrer">(81) 9 8447-2771</a>
+                    </div>
+                </div>
+                <div class="footer-contact-item d-flex gap-3 mb-2">
+                    <i class="ri-linkedin-fill fs-20 text-info"></i>
+                    <div>
+                        <small class="d-block text-white-50">LinkedIn</small>
+                        <a class="fw-bold text-white" href="https://www.linkedin.com/in/karinemascena/" target="_blank" rel="noopener noreferrer">in/karinemascena</a>
+                    </div>
+                </div>
+                <div class="footer-contact-item d-flex gap-3">
+                    <i class="ri-instagram-line fs-20 text-danger"></i>
+                    <div>
+                        <small class="d-block text-white-50">Instagram</small>
+                        <a class="fw-bold text-white" href="https://www.instagram.com/karinemascena/" target="_blank" rel="noopener noreferrer">@karinemascena</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+{% endblock content %}

@@ -1,0 +1,653 @@
+{% extends "layouts/base.html" %}
+
+{% block title %}{% if post %}Editar: {{ post.title }}{% else %}Novo Artigo{% endif %} | Olinda Aguiar ERP{% endblock title %}
+
+{% block extra_css %}
+<!-- Quill Rich Text Editor Theme -->
+<link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+<style>
+    /* ── Quill Editor Stylings ────────────────────────── */
+    .blog-editor-card {
+        border-radius: 16px;
+        border: 1px solid #e2e8f0;
+        box-shadow: 0 10px 30px rgba(15, 23, 42, 0.04);
+        background: #ffffff;
+    }
+    .ql-toolbar.ql-snow {
+        border-top-left-radius: 12px;
+        border-top-right-radius: 12px;
+        background-color: #f8fafc;
+        border-color: #e2e8f0;
+        padding: 12px 16px;
+    }
+    .ql-container.ql-snow {
+        border-bottom-left-radius: 12px;
+        border-bottom-right-radius: 12px;
+        border-color: #e2e8f0;
+        min-height: 480px;
+        font-size: 1.05rem;
+        font-family: inherit;
+        background-color: #ffffff;
+    }
+    .ql-editor {
+        min-height: 460px;
+        line-height: 1.85;
+        padding: 24px;
+    }
+
+    /* ── Tooltips nos Botões da Barra ─────────────────── */
+    .ql-toolbar button[title],
+    .ql-toolbar .ql-picker-label[title] {
+        position: relative;
+    }
+    .ql-toolbar button::after {
+        content: attr(data-tooltip);
+        position: absolute;
+        bottom: calc(100% + 6px);
+        left: 50%;
+        transform: translateX(-50%);
+        white-space: nowrap;
+        background: #0f172a;
+        color: #ffffff;
+        font-size: 11px;
+        font-weight: 500;
+        padding: 4px 9px;
+        border-radius: 6px;
+        pointer-events: none;
+        opacity: 0;
+        transition: opacity 0.2s ease;
+        z-index: 9999;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+    .ql-toolbar button:hover::after {
+        opacity: 1;
+    }
+
+    /* ── Image Cover Preview ─────────────────────────── */
+    .cover-preview-box {
+        width: 100%;
+        height: 200px;
+        border-radius: 12px;
+        object-fit: cover;
+        border: 2px dashed #cbd5e1;
+        background-color: #f8fafc;
+    }
+</style>
+{% endblock extra_css %}
+
+{% block content %}
+<div class="container-fluid py-4">
+
+    <!-- Form Principal (GET/POST dedicado) -->
+    <form action="{% if post %}/blog-admin/editar/{{ post.id }}{% else %}/blog-admin/novo{% endif %}"
+          method="post"
+          enctype="multipart/form-data"
+          id="form-blog-editor">
+
+        <!-- Top Header & Breadcrumb Navigation -->
+        <div class="d-flex flex-wrap align-items-center justify-content-between gap-3 mb-4">
+            <div>
+                <div class="d-flex align-items-center gap-2 mb-1">
+                    <a href="/blog-admin" class="btn btn-sm btn-outline-secondary rounded-pill px-3 py-1 fw-semibold text-decoration-none">
+                        <i class="ri-arrow-left-line me-1"></i> Voltar à Lista
+                    </a>
+                    <span class="text-muted fs-13">•</span>
+                    <span class="badge bg-warning text-dark px-3 py-1 rounded-pill fw-bold text-uppercase fs-11">
+                        {% if post %}Edição Exclusiva{% else %}Novo Artigo{% endif %}
+                    </span>
+                </div>
+                <h2 class="fw-bold text-dark mb-0">
+                    <i class="ri-quill-pen-line text-warning me-2"></i>
+                    {% if post %}Editar Artigo: <span class="text-secondary">{{ post.title }}</span>{% else %}Escrever Novo Artigo{% endif %}
+                </h2>
+            </div>
+            
+            <div class="d-flex gap-2">
+                <a href="/blog-admin" class="btn btn-light rounded-pill px-4 fw-semibold text-secondary">
+                    Descartar
+                </a>
+                <button type="submit" class="btn btn-warning rounded-pill px-4 fw-bold text-dark shadow-sm">
+                    <i class="ri-save-3-line me-1"></i>
+                    {% if post %}Salvar Alterações{% else %}Publicar Artigo{% endif %}
+                </button>
+            </div>
+        </div>
+
+        <!-- Layout de Página Inteira (Grid 8 x 4) -->
+        <div class="row g-4">
+
+            <!-- Coluna Principal (Conteúdo & Título) -->
+            <div class="col-lg-8">
+                
+                <!-- Card de Título e Subtítulo -->
+                <div class="card blog-editor-card p-4 mb-4">
+                    <div class="mb-3">
+                        <label class="form-label fw-bold text-dark fs-15">
+                            Título do Artigo <span class="text-danger">*</span>
+                        </label>
+                        <input type="text"
+                               name="title"
+                               class="form-control form-control-lg fw-bold rounded-3"
+                               placeholder="Ex: Do Lixo ao Luxo: A História da Madeira de Demolição..."
+                               value="{{ post.title if post else '' }}"
+                               required>
+                    </div>
+
+                    <div class="mb-0">
+                        <label class="form-label fw-semibold text-dark fs-14">
+                            Subtítulo / Resumo para Listagem
+                        </label>
+                        <input type="text"
+                               name="subtitle"
+                               class="form-control rounded-3"
+                               placeholder="Uma frase curta que resume o post na página inicial do blog..."
+                               value="{{ post.subtitle if post and post.subtitle else '' }}">
+                    </div>
+                </div>
+
+                <!-- Card do Editor Visual Rich-Text -->
+                <div class="card blog-editor-card p-4">
+                    <div class="d-flex align-items-center justify-content-between mb-3">
+                        <label class="form-label fw-bold text-dark fs-15 mb-0">
+                            <i class="ri-layout-grid-fill text-warning me-2"></i>Conteúdo Principal do Artigo
+                        </label>
+                        <small class="text-muted">Editor Visual Completo — altere textos, crie títulos, listas e insira imagens</small>
+                    </div>
+
+                    <!-- Editor Quill Contêiner -->
+                    <div id="editor-page-container">
+                        {% if post %}
+                            {{ post.content | safe }}
+                        {% else %}
+                            <p>A madeira de demolição é uma verdadeira joia do patrimônio pernambucano. Retiradas de antigos casarios e construções históricas de Recife e Olinda, essas madeiras de lei passaram por décadas de secagem natural, resultando em uma durabilidade incomparável.</p>
+                            <p>Cada ranhura, marca de prego antigo e variação de tom conta uma história. No Atelier Olinda Aguiar, preservamos essa memória viva através de entalhes manuais e acabamentos ecológicos em cera natural.</p>
+                        {% endif %}
+                    </div>
+
+                    <!-- Hidden input para envio via POST -->
+                    <input type="hidden" name="content" id="input-page-content">
+                </div>
+
+            </div>
+
+            <!-- Coluna Lateral (Metadados & Capa) -->
+            <div class="col-lg-4">
+
+                <!-- Card de Ações Rápidas -->
+                <div class="card blog-editor-card p-4 mb-4">
+                    <h5 class="fw-bold text-dark mb-3">
+                        <i class="ri-send-plane-line text-warning me-2"></i>Publicação
+                    </h5>
+                    
+                    <div class="d-grid gap-2 mb-3">
+                        <button type="submit" class="btn btn-warning py-2.5 rounded-pill fw-bold text-dark shadow-sm">
+                            <i class="ri-save-line me-1"></i>
+                            {% if post %}Salvar Alterações{% else %}Publicar Agora{% endif %}
+                        </button>
+
+                        {% if post %}
+                        <a href="/blog/{{ post.slug }}" target="_blank" class="btn btn-outline-secondary py-2 rounded-pill fw-semibold">
+                            <i class="ri-external-link-line me-1"></i> Ver no Site Público
+                        </a>
+                        {% endif %}
+
+                        <a href="/blog-admin" class="btn btn-light py-2 rounded-pill text-secondary fw-semibold">
+                            Cancelar e Voltar
+                        </a>
+                    </div>
+
+                    <small class="text-muted d-block text-center fs-12">
+                        <i class="ri-shield-check-line me-1"></i>
+                        As alterações serão salvas imediatamente no banco de dados.
+                    </small>
+                </div>
+
+                <!-- Card da Imagem de Capa -->
+                <div class="card blog-editor-card p-4 mb-4">
+                    <h5 class="fw-bold text-dark mb-3">
+                        <i class="ri-image-add-line text-warning me-2"></i>Imagem de Capa Destaque
+                    </h5>
+
+                    <!-- Preview da Imagem -->
+                    <div class="mb-3 text-center">
+                        {% set current_img = (post.image_filename if post and post.image_filename else 'logo_olinda_aguiar.png') %}
+                        <img id="cover-preview"
+                             src="{{ url_for('static', filename='images/' + current_img) }}"
+                             alt="Preview da Capa"
+                             class="cover-preview-box shadow-sm mb-2">
+                        <small class="text-muted d-block" id="cover-filename-label">Imagem atual: <code>{{ current_img }}</code></small>
+                    </div>
+
+                    <div>
+                        <label class="form-label fw-semibold text-dark fs-13">Alterar Foto de Capa (Upload File)</label>
+                        <input type="file"
+                               name="image_file"
+                               id="input-cover-file"
+                               class="form-control"
+                               accept="image/*">
+                        <small class="text-muted fs-12 mt-1 d-block">Formato recomendado: JPG/PNG em alta resolução.</small>
+                    </div>
+                </div>
+
+                <!-- Card de Metadados -->
+                <div class="card blog-editor-card p-4">
+                    <h5 class="fw-bold text-dark mb-3">
+                        <i class="ri-price-tag-3-line text-warning me-2"></i>Metadados do Post
+                    </h5>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold text-dark fs-13">Autor</label>
+                        <input type="text"
+                               name="author"
+                               class="form-control"
+                               value="{{ post.author if post else 'Atelier Olinda Aguiar' }}"
+                               required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold text-dark fs-13">Categoria</label>
+                        <input type="text"
+                               name="category"
+                               class="form-control"
+                               value="{{ post.category if post else 'Arte & Sustentabilidade' }}"
+                               required>
+                    </div>
+
+                    <div class="mb-0">
+                        <label class="form-label fw-semibold text-dark fs-13">Tempo Est. de Leitura</label>
+                        <input type="text"
+                               name="read_time"
+                               class="form-control"
+                               value="{{ post.read_time if post else '4 min de leitura' }}"
+                               required>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </form>
+
+</div>
+
+<!-- Script do Quill Editor Full Page -->
+<script src="https://cdn.quilljs.com/1.3.6/quill.min.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    // ── Preview dinâmico do upload da foto de capa ───────────
+    const coverInput = document.getElementById('input-cover-file');
+    const coverPreview = document.getElementById('cover-preview');
+    const coverLabel = document.getElementById('cover-filename-label');
+
+    if (coverInput && coverPreview) {
+        coverInput.addEventListener('change', function () {
+            const file = this.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    coverPreview.src = e.target.result;
+                    if (coverLabel) {
+                        coverLabel.innerHTML = `Nova imagem selecionada: <code>${file.name}</code>`;
+                    }
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+    }
+
+    // ── Tooltips legíveis em Português para os botões do Quill ──
+    const TOOLTIPS = {
+        'ql-bold':         'Negrito',
+        'ql-italic':       'Itálico',
+        'ql-underline':    'Sublinhado',
+        'ql-strike':       'Tachado',
+        'ql-blockquote':   'Citação em destaque',
+        'ql-link':         'Inserir Link',
+        'ql-image':        'Inserir Imagem Inline',
+        'ql-clean':        'Limpar Formatação',
+        'ql-list-ordered': 'Lista Numerada',
+        'ql-list-bullet':  'Lista com Marcadores',
+        'ql-color':        'Cor do Texto',
+        'ql-background':   'Cor de Fundo',
+        'ql-align':        'Alinhamento do Texto',
+        'ql-header':       'Estilo do Título',
+        'ql-code-block':   'Bloco de Código'
+    };
+
+    function applyTooltips(toolbar) {
+        if (!toolbar) return;
+        toolbar.querySelectorAll('button').forEach(btn => {
+            const cls = Array.from(btn.classList).find(c => c.startsWith('ql-'));
+            if (!cls) return;
+            const value = btn.value;
+            let label = TOOLTIPS[cls] || cls.replace('ql-', '');
+            if (cls === 'ql-list') {
+                label = value === 'ordered' ? 'Lista Numerada' : 'Lista com Marcadores';
+            }
+            btn.setAttribute('data-tooltip', label);
+            btn.title = label;
+        });
+    }
+
+    // ── Custom Image Handler: insere imagens via FileReader Base64 ──
+    function imageHandler(quill) {
+        const input = document.createElement('input');
+        input.setAttribute('type', 'file');
+        input.setAttribute('accept', 'image/*');
+        input.click();
+        input.onchange = () => {
+            const file = input.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                const range = quill.getSelection(true);
+                quill.insertEmbed(range.index, 'image', e.target.result);
+                quill.setSelection(range.index + 1);
+            };
+            reader.readAsDataURL(file);
+        };
+    }
+
+    // ── Opções da Barra de Ferramentas estilo Techzaa / Lahomes ──
+    const toolbarOptions = [
+        [{ 'header': [1, 2, 3, 4, false] }],
+        ['bold', 'italic', 'underline', 'strike'],
+        [{ 'color': [] }, { 'background': [] }],
+        [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+        [{ 'align': [] }],
+        ['blockquote', 'code-block'],
+        ['link', 'image'],
+        ['clean']
+    ];
+
+    // ── Inicialização do Quill no DOM Visível da Página ─────────
+    const quill = new Quill('#editor-page-container', {
+        theme: 'snow',
+        placeholder: 'Escreva e formate aqui o conteúdo completo do seu artigo...',
+        modules: {
+            toolbar: {
+                container: toolbarOptions,
+                handlers: {
+                    image: function () { imageHandler(this.quill); }
+                }
+            }
+        }
+    });
+
+    // Aplica tooltips nos botões
+    const toolbarEl = document.querySelector('.ql-toolbar');
+    if (toolbarEl) {
+        applyTooltips(toolbarEl);
+    }
+
+    // Passa o HTML formatado para o campo oculto antes de enviar
+    const form = document.getElementById('form-blog-editor');
+    if (form) {
+        form.addEventListener('submit', function () {
+            document.getElementById('input-page-content').value = quill.root.innerHTML;
+        });
+    }
+
+    // ── CONTROLE DE ALÇAS DE REDIMENSIONAMENTO E TOOLBAR FLUTUANTE ─────────
+    let activeImage = null;
+    let imageToolbar = null;
+    let resizeHandles = [];
+
+    // ── Alças Quadradas nos 4 Cantos da Imagem (Corner Resize Handles) ───
+    function createResizeHandles() {
+        if (resizeHandles.length > 0) return resizeHandles;
+
+        const positions = ['top-left', 'top-right', 'bottom-left', 'bottom-right'];
+        const cursors = ['nwse-resize', 'nesw-resize', 'nesw-resize', 'nwse-resize'];
+
+        positions.forEach((pos, idx) => {
+            const handle = document.createElement('div');
+            handle.className = `quill-img-resize-handle handle-${pos}`;
+            handle.title = 'Arraste para redimensionar a imagem';
+            handle.style.cssText = `
+                position: absolute;
+                width: 14px;
+                height: 14px;
+                background-color: #d97706;
+                border: 2px solid #ffffff;
+                border-radius: 4px;
+                z-index: 10001;
+                display: none;
+                cursor: ${cursors[idx]};
+                box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+                user-select: none;
+                touch-action: none;
+            `;
+            document.body.appendChild(handle);
+
+            // Handler de Arrastar com o Mouse (Mouse Dragging)
+            handle.addEventListener('mousedown', function (e) {
+                e.preventDefault();
+                e.stopPropagation();
+                if (!activeImage) return;
+
+                const startX = e.clientX;
+                const startWidth = activeImage.getBoundingClientRect().width;
+                const editorArea = activeImage.closest('.ql-editor');
+                const containerWidth = editorArea ? editorArea.clientWidth : (activeImage.parentElement ? activeImage.parentElement.clientWidth : 700);
+
+                function onMouseMove(moveEvent) {
+                    moveEvent.preventDefault();
+                    let deltaX = moveEvent.clientX - startX;
+                    if (pos.includes('left')) {
+                        deltaX = -deltaX;
+                    }
+                    let newPx = Math.max(80, startWidth + deltaX * 2);
+                    let newPercent = Math.min(100, Math.round((newPx / containerWidth) * 100));
+
+                    activeImage.style.width = newPercent + '%';
+                    activeImage.style.maxWidth = '100%';
+                    activeImage.style.height = 'auto';
+                    activeImage.style.display = 'block';
+                    activeImage.style.margin = '1rem auto';
+
+                    updateActiveButtons(newPercent + '%');
+                    positionToolbar(activeImage);
+                    positionResizeHandles(activeImage);
+                }
+
+                function onMouseUp() {
+                    window.removeEventListener('mousemove', onMouseMove);
+                    window.removeEventListener('mouseup', onMouseUp);
+                }
+
+                window.addEventListener('mousemove', onMouseMove);
+                window.addEventListener('mouseup', onMouseUp);
+            });
+
+            resizeHandles.push(handle);
+        });
+
+        return resizeHandles;
+    }
+
+    function positionResizeHandles(img) {
+        const handles = createResizeHandles();
+        const rect = img.getBoundingClientRect();
+        const scrollX = window.scrollX || window.pageXOffset;
+        const scrollY = window.scrollY || window.pageYOffset;
+
+        const offset = 7; // metade do tamanho da alça (14px / 2)
+
+        const coords = {
+            'top-left':     { top: rect.top + scrollY - offset, left: rect.left + scrollX - offset },
+            'top-right':    { top: rect.top + scrollY - offset, left: rect.right + scrollX - offset },
+            'bottom-left':  { top: rect.bottom + scrollY - offset, left: rect.left + scrollX - offset },
+            'bottom-right': { top: rect.bottom + scrollY - offset, left: rect.right + scrollX - offset },
+        };
+
+        handles.forEach(h => {
+            const pos = Array.from(h.classList).find(c => c.startsWith('handle-')).replace('handle-', '');
+            if (coords[pos]) {
+                h.style.top = coords[pos].top + 'px';
+                h.style.left = coords[pos].left + 'px';
+                h.style.display = 'block';
+            }
+        });
+    }
+
+    function hideResizeHandles() {
+        resizeHandles.forEach(h => {
+            h.style.display = 'none';
+        });
+    }
+
+    function createImageToolbar() {
+        if (imageToolbar) return imageToolbar;
+        
+        imageToolbar = document.createElement('div');
+        imageToolbar.id = 'quill-image-floating-toolbar';
+        imageToolbar.style.cssText = `
+            position: absolute;
+            z-index: 10000;
+            background: #0f172a;
+            color: #ffffff;
+            padding: 7px 14px;
+            border-radius: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+            display: none;
+            align-items: center;
+            gap: 6px;
+            font-size: 12px;
+            font-weight: 600;
+            user-select: none;
+            backdrop-filter: blur(8px);
+        `;
+
+        imageToolbar.innerHTML = `
+            <span class="text-white-50 px-1 me-1 fs-11 border-end border-secondary pe-2">Tamanho:</span>
+            <button type="button" data-size="35%" class="btn-img-size btn btn-xs btn-outline-light rounded-pill px-2 py-1 fs-11">Pequeno</button>
+            <button type="button" data-size="70%" class="btn-img-size btn btn-xs btn-outline-light rounded-pill px-2 py-1 fs-11">Melhor ajuste</button>
+            <button type="button" data-size="100%" class="btn-img-size btn btn-xs btn-outline-light rounded-pill px-2 py-1 fs-11">Tamanho original</button>
+            <span class="border-end border-secondary mx-1" style="height: 16px;"></span>
+            <button type="button" class="btn-img-delete btn btn-xs btn-danger rounded-pill px-2-5 py-1 fs-11">
+                <i class="ri-delete-bin-line me-1"></i>Remover
+            </button>
+        `;
+
+        document.body.appendChild(imageToolbar);
+
+        // Event listeners nos botões de tamanho
+        imageToolbar.querySelectorAll('.btn-img-size').forEach(btn => {
+            btn.addEventListener('click', function (e) {
+                e.preventDefault();
+                e.stopPropagation();
+                if (!activeImage) return;
+                const size = this.getAttribute('data-size');
+                activeImage.style.width = size;
+                activeImage.style.maxWidth = '100%';
+                activeImage.style.height = 'auto';
+                activeImage.style.display = 'block';
+                activeImage.style.margin = '1rem auto';
+                updateActiveButtons(size);
+                positionToolbar(activeImage);
+                positionResizeHandles(activeImage);
+            });
+        });
+
+        // Event listener no botão de remover
+        imageToolbar.querySelector('.btn-img-delete').addEventListener('click', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            if (!activeImage) return;
+            
+            const blot = Quill.find(activeImage);
+            if (blot) {
+                blot.deleteAt(0, 1);
+            } else {
+                activeImage.remove();
+            }
+            hideImageToolbar();
+        });
+
+        return imageToolbar;
+    }
+
+    function updateActiveButtons(currentWidth) {
+        if (!imageToolbar) return;
+        imageToolbar.querySelectorAll('.btn-img-size').forEach(btn => {
+            const btnSize = btn.getAttribute('data-size');
+            if (btnSize === currentWidth || (currentWidth === '' && btnSize === '100%')) {
+                btn.className = 'btn-img-size btn btn-xs btn-warning rounded-pill px-2-5 py-1 fs-11 fw-bold text-dark shadow-sm';
+            } else {
+                btn.className = 'btn-img-size btn btn-xs btn-outline-light rounded-pill px-2-5 py-1 fs-11';
+            }
+        });
+    }
+
+    function positionToolbar(img) {
+        const tb = createImageToolbar();
+        const rect = img.getBoundingClientRect();
+        const scrollX = window.scrollX || window.pageXOffset;
+        const scrollY = window.scrollY || window.pageYOffset;
+
+        tb.style.display = 'flex';
+        
+        let top = rect.top + scrollY - 52;
+        if (top < scrollY + 10) {
+            top = rect.bottom + scrollY + 10;
+        }
+        
+        let left = rect.left + scrollX + (rect.width / 2) - (tb.offsetWidth / 2);
+        if (left < 10) left = 10;
+
+        tb.style.top = top + 'px';
+        tb.style.left = left + 'px';
+    }
+
+    function hideImageToolbar() {
+        if (activeImage) {
+            activeImage.style.outline = 'none';
+            activeImage.style.boxShadow = 'none';
+            activeImage = null;
+        }
+        if (imageToolbar) {
+            imageToolbar.style.display = 'none';
+        }
+        hideResizeHandles();
+    }
+
+    // Delegation no container do Quill Editor
+    const editorContainer = document.querySelector('#editor-page-container');
+    if (editorContainer) {
+        editorContainer.addEventListener('click', function (e) {
+            if (e.target && e.target.tagName === 'IMG') {
+                e.stopPropagation();
+                if (activeImage && activeImage !== e.target) {
+                    activeImage.style.outline = 'none';
+                    activeImage.style.boxShadow = 'none';
+                }
+                activeImage = e.target;
+                activeImage.style.outline = '3px solid #d97706';
+                activeImage.style.borderRadius = '8px';
+                activeImage.style.boxShadow = '0 4px 20px rgba(217, 119, 6, 0.35)';
+
+                let w = activeImage.style.width || '100%';
+                updateActiveButtons(w);
+                positionToolbar(activeImage);
+                positionResizeHandles(activeImage);
+            } else {
+                hideImageToolbar();
+            }
+        });
+    }
+
+    // Fechar ao clicar fora ou redimensionar a janela
+    document.addEventListener('click', function (e) {
+        if (imageToolbar && imageToolbar.contains(e.target)) return;
+        if (resizeHandles.some(h => h.contains(e.target))) return;
+        if (e.target && e.target.tagName === 'IMG' && e.target.closest('#editor-page-container')) return;
+        hideImageToolbar();
+    });
+
+    window.addEventListener('resize', hideImageToolbar);
+
+});
+</script>
+{% endblock content %}
